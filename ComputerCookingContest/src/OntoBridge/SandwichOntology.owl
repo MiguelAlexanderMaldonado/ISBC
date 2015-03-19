@@ -1,0 +1,636 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns="http://www.owl-ontologies.com/Ontology1414156932.owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xml:base="http://www.owl-ontologies.com/Ontology1414156932.owl">
+  <owl:Ontology rdf:about=""/>
+  <owl:Class rdf:ID="Chile">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="VegetalFruit"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Tomato"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Pepper"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Avocado"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="Vegetable">
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Fruit"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Vegetals"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="ProcessedFoods">
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Animals"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Vegetals"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="SandwichIngredients"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Plant">
+    <owl:disjointWith>
+      <owl:Class rdf:about="#VegetalFruit"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf rdf:resource="#Vegetable"/>
+  </owl:Class>
+  <owl:Class rdf:ID="LactoseIntolerantSandwich">
+    <owl:disjointWith>
+      <owl:Class rdf:ID="NonLactoseIntolerantSandwich"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class rdf:ID="Dairy"/>
+        </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="hasIngredient"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Sandwich"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="VeganSandwich">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom>
+          <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+              <owl:Class rdf:ID="Dressing"/>
+              <owl:Class rdf:ID="Mermelades"/>
+              <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                  <owl:Class rdf:ID="Sauces"/>
+                  <owl:Class>
+                    <owl:complementOf>
+                      <owl:Class rdf:ID="Mayonnaise"/>
+                    </owl:complementOf>
+                  </owl:Class>
+                </owl:intersectionOf>
+              </owl:Class>
+              <owl:Class rdf:about="#Vegetals"/>
+            </owl:unionOf>
+          </owl:Class>
+        </owl:allValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasIngredient"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class rdf:about="#Dressing"/>
+        </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasIngredient"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class>
+            <owl:intersectionOf rdf:parseType="Collection">
+              <owl:Class rdf:about="#Sauces"/>
+              <owl:Class>
+                <owl:complementOf>
+                  <owl:Class rdf:about="#Mayonnaise"/>
+                </owl:complementOf>
+              </owl:Class>
+            </owl:intersectionOf>
+          </owl:Class>
+        </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasIngredient"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class rdf:about="#Mermelades"/>
+        </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasIngredient"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasIngredient"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class rdf:about="#Vegetals"/>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Sandwich"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Fruit">
+    <owl:disjointWith rdf:resource="#Vegetable"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Vegetals"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Mermelades">
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Dairy"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Dressing"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Sauces"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf rdf:resource="#ProcessedFoods"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Ketchup">
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Mayonnaise"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="GarlicSauce"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Sauces"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="CarnivorousSandwich">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasIngredient"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class rdf:ID="Meat"/>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Sandwich"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="VegetarianSandwich"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="Oil">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Dressing"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="PepperDressing"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Curry"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:about="#Sandwich">
+    <owl:disjointWith>
+      <owl:Class rdf:ID="SandwichBase"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#SandwichIngredients"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasIngredient"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class rdf:about="#SandwichIngredients"/>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="hasBase"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class rdf:about="#SandwichBase"/>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Tuna">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Fish"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Salmon"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="Cheese">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Dairy"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Margarine"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:about="#Mayonnaise">
+    <owl:disjointWith rdf:resource="#Ketchup"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#GarlicSauce"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Sauces"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Veal">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Meat"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Bird"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Lamb"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Pig"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:about="#Sauces">
+    <rdfs:subClassOf rdf:resource="#ProcessedFoods"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Dairy"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Dressing"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Mermelades"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Salmon">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Fish"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith rdf:resource="#Tuna"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Duck">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Bird"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Turkey"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Chicken"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:about="#Pig">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Meat"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Bird"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Lamb"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Veal"/>
+  </owl:Class>
+  <owl:Class rdf:ID="PeachMermelade">
+    <rdfs:subClassOf rdf:resource="#Mermelades"/>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="StrawberryMermelade"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="Lettuce">
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Spinach"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf rdf:resource="#Plant"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Chicken">
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Turkey"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Duck"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Bird"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#StrawberryMermelade">
+    <rdfs:subClassOf rdf:resource="#Mermelades"/>
+    <owl:disjointWith rdf:resource="#PeachMermelade"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Curry">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Dressing"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#PepperDressing"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Oil"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Avocado">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#VegetalFruit"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Tomato"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Pepper"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Chile"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Spinach">
+    <rdfs:subClassOf rdf:resource="#Plant"/>
+    <owl:disjointWith rdf:resource="#Lettuce"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Animals">
+    <owl:disjointWith rdf:resource="#ProcessedFoods"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Vegetals"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#SandwichIngredients"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#VegetalFruit">
+    <owl:disjointWith rdf:resource="#Plant"/>
+    <rdfs:subClassOf rdf:resource="#Vegetable"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Wholemeal">
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Baguette"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Bread"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Ciabatta"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#SandwichBase"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Lamb">
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Bird"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Pig"/>
+    <owl:disjointWith rdf:resource="#Veal"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Meat"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#PepperDressing">
+    <owl:disjointWith rdf:resource="#Oil"/>
+    <owl:disjointWith rdf:resource="#Curry"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Dressing"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Turkey">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Bird"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith rdf:resource="#Duck"/>
+    <owl:disjointWith rdf:resource="#Chicken"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Egg">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Derivatives"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Honey"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="Strawberry">
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Banana"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf rdf:resource="#Fruit"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Dressing">
+    <rdfs:subClassOf rdf:resource="#ProcessedFoods"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Dairy"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Mermelades"/>
+    <owl:disjointWith rdf:resource="#Sauces"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Banana">
+    <owl:disjointWith rdf:resource="#Strawberry"/>
+    <rdfs:subClassOf rdf:resource="#Fruit"/>
+  </owl:Class>
+  <owl:Class rdf:about="#SandwichBase">
+    <owl:disjointWith rdf:resource="#Sandwich"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#SandwichIngredients"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:about="#Bread">
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Baguette"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Ciabatta"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Wholemeal"/>
+    <rdfs:subClassOf rdf:resource="#SandwichBase"/>
+  </owl:Class>
+  <owl:Class rdf:about="#SandwichIngredients">
+    <owl:disjointWith rdf:resource="#SandwichBase"/>
+    <owl:disjointWith rdf:resource="#Sandwich"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Bird">
+    <owl:disjointWith rdf:resource="#Lamb"/>
+    <owl:disjointWith rdf:resource="#Pig"/>
+    <owl:disjointWith rdf:resource="#Veal"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Meat"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Baguette">
+    <rdfs:subClassOf rdf:resource="#SandwichBase"/>
+    <owl:disjointWith rdf:resource="#Bread"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Ciabatta"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Wholemeal"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Derivatives">
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Fish"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Meat"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf rdf:resource="#Animals"/>
+  </owl:Class>
+  <owl:Class rdf:about="#NonLactoseIntolerantSandwich">
+    <rdfs:subClassOf>
+      <owl:Class>
+        <owl:complementOf>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#hasIngredient"/>
+            </owl:onProperty>
+            <owl:someValuesFrom>
+              <owl:Class rdf:about="#Dairy"/>
+            </owl:someValuesFrom>
+          </owl:Restriction>
+        </owl:complementOf>
+      </owl:Class>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#Sandwich"/>
+    <owl:disjointWith rdf:resource="#LactoseIntolerantSandwich"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Fish">
+    <rdfs:subClassOf rdf:resource="#Animals"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Meat"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Derivatives"/>
+  </owl:Class>
+  <owl:Class rdf:about="#VegetarianSandwich">
+    <owl:disjointWith rdf:resource="#CarnivorousSandwich"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom>
+          <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+              <owl:Class rdf:about="#Derivatives"/>
+              <owl:Class rdf:about="#ProcessedFoods"/>
+              <owl:Class rdf:about="#Vegetals"/>
+            </owl:unionOf>
+          </owl:Class>
+        </owl:allValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasIngredient"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasIngredient"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="#Derivatives"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class rdf:about="#Vegetals"/>
+        </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasIngredient"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#ProcessedFoods"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasIngredient"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#Sandwich"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Margarine">
+    <owl:disjointWith rdf:resource="#Cheese"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Dairy"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Honey">
+    <owl:disjointWith rdf:resource="#Egg"/>
+    <rdfs:subClassOf rdf:resource="#Derivatives"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Pepper">
+    <rdfs:subClassOf rdf:resource="#VegetalFruit"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Tomato"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Chile"/>
+    <owl:disjointWith rdf:resource="#Avocado"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Vegetals">
+    <rdfs:subClassOf rdf:resource="#SandwichIngredients"/>
+    <owl:disjointWith rdf:resource="#Animals"/>
+    <owl:disjointWith rdf:resource="#ProcessedFoods"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Tomato">
+    <owl:disjointWith rdf:resource="#Pepper"/>
+    <owl:disjointWith rdf:resource="#Chile"/>
+    <owl:disjointWith rdf:resource="#Avocado"/>
+    <rdfs:subClassOf rdf:resource="#VegetalFruit"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Meat">
+    <owl:disjointWith rdf:resource="#Fish"/>
+    <owl:disjointWith rdf:resource="#Derivatives"/>
+    <rdfs:subClassOf rdf:resource="#Animals"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Ciabatta">
+    <owl:disjointWith rdf:resource="#Baguette"/>
+    <owl:disjointWith rdf:resource="#Bread"/>
+    <owl:disjointWith rdf:resource="#Wholemeal"/>
+    <rdfs:subClassOf rdf:resource="#SandwichBase"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Dairy">
+    <rdfs:subClassOf rdf:resource="#ProcessedFoods"/>
+    <owl:disjointWith rdf:resource="#Dressing"/>
+    <owl:disjointWith rdf:resource="#Mermelades"/>
+    <owl:disjointWith rdf:resource="#Sauces"/>
+  </owl:Class>
+  <owl:Class rdf:about="#GarlicSauce">
+    <rdfs:subClassOf rdf:resource="#Sauces"/>
+    <owl:disjointWith rdf:resource="#Mayonnaise"/>
+    <owl:disjointWith rdf:resource="#Ketchup"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="isIngredientOf">
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#hasIngredient"/>
+    </owl:inverseOf>
+    <rdfs:domain rdf:resource="#SandwichIngredients"/>
+    <rdfs:range rdf:resource="#Sandwich"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="isBaseOf">
+    <rdfs:domain rdf:resource="#SandwichBase"/>
+    <rdfs:range rdf:resource="#Sandwich"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#hasBase"/>
+    </owl:inverseOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasIngredient">
+    <rdfs:range rdf:resource="#SandwichIngredients"/>
+    <rdfs:domain rdf:resource="#Sandwich"/>
+    <owl:inverseOf rdf:resource="#isIngredientOf"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasBase">
+    <rdfs:range rdf:resource="#SandwichBase"/>
+    <rdfs:domain rdf:resource="#Sandwich"/>
+    <owl:inverseOf rdf:resource="#isBaseOf"/>
+  </owl:ObjectProperty>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.3.1, Build 430)  http://protege.stanford.edu -->

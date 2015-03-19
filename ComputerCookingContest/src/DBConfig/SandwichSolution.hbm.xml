@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+<class name="CBRApplication.SandwichSolution" table="Sandwich">
+
+	<id name="caseID" column="caseID"></id>
+	<property name="ingredient1" column="ingredient1"/>
+	<property name="ingredient2" column="ingredient2"/>
+	<property name="ingredient3" column="ingredient3"/>
+	<property name="ingredient4" column="ingredient4"/>
+	<property name="ingredient5" column="ingredient5"/>
+	
+</class>
+</hibernate-mapping>

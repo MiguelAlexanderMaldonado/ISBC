@@ -1,0 +1,5 @@
+<DataBaseConfiguration>
+	<HibernateConfigFile>DBConfig/hibernate.cfg.xml</HibernateConfigFile>
+	<DescriptionMappingFile>DBConfig/SandwichDescription.hbm.xml</DescriptionMappingFile>
+	<DescriptionClassName>CBRApplication.SandwichDescription</DescriptionClassName>
+</DataBaseConfiguration>

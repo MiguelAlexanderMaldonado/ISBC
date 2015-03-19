@@ -1,0 +1,12 @@
+drop table sandwich;
+create table sandwich(caseID VARCHAR(30), ingredient1 VARCHAR(30), ingredient2 VARCHAR(30), ingredient3 VARCHAR(30), ingredient4 VARCHAR(30), ingredient5 VARCHAR(30));
+insert into sandwich values('Sandwich1','Bread','Tuna','Oil','Avocado','Lettuce');
+insert into sandwich values('Sandwich2','Baguette','Egg','Avocado','Turkey','Mayonnaise');
+insert into sandwich values('Sandwich3','Bread','Avocado','Oil','Egg','Turkey');
+insert into sandwich values('Sandwich4','Wholemeal','Cheese','Pig','Lettuce','Oil');
+insert into sandwich values('Sandwich5','Ciabatta','Chile','Oil','Veal','Cheese');
+insert into sandwich values('Sandwich6','Bread','Tuna','Lettuce','Avocado','Mayonnaise');
+insert into sandwich values('Sandwich7','Bread','Oil','Avocado','Mayonnaise','Lettuce');
+insert into sandwich values('Sandwich8','Bread','Lettuce','Avocado','Oil','Mayonnaise');
+insert into sandwich values('Sandwich9','Bread','Lettuce','Lettuce','Oil','Mayonnaise');
+insert into sandwich values('Sandwich10','Tuna','Bread','Lettuce','Avocado','Mayonnaise');
