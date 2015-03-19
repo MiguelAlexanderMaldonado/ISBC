@@ -34,17 +34,16 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.awt.Button;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import java.awt.Panel;
-import java.awt.Checkbox;
+import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import javax.swing.BoxLayout;
 
 @SuppressWarnings("serial")
 public class UI extends JFrame {
 
+	protected JPanel panelTreeRestrictionsContainer;
 	private JPanel contentPane;
 	
-	/**Controles**/
 	private JCheckBox IngredientCheckBox1;
 	private JCheckBox IngredientCheckBox2;
 	private JCheckBox IngredientCheckBox3;
@@ -111,29 +110,29 @@ public class UI extends JFrame {
 		JCheckBox BreadCheckBox = new JCheckBox("");
 		BreadCheckBox.setEnabled(false);
 		BreadCheckBox.setSelected(true);
-		BreadCheckBox.setBounds(10, 123, 49, 23);
+		BreadCheckBox.setBounds(10, 97, 49, 23);
 		contentPane.add(BreadCheckBox);
 		
 		IngredientCheckBox1 = new JCheckBox("");
 		IngredientCheckBox1.setToolTipText("First Ingredient");
-		IngredientCheckBox1.setBounds(10, 155, 49, 23);
+		IngredientCheckBox1.setBounds(10, 129, 49, 23);
 		contentPane.add(IngredientCheckBox1);
 		
 		IngredientCheckBox2 = new JCheckBox("");
 		IngredientCheckBox2.setToolTipText("Second Ingredient");
-		IngredientCheckBox2.setBounds(10, 181, 49, 23);
+		IngredientCheckBox2.setBounds(10, 155, 49, 23);
 		IngredientCheckBox2.setEnabled(false);
 		contentPane.add(IngredientCheckBox2);
 		
 		IngredientCheckBox3 = new JCheckBox("");
 		IngredientCheckBox3.setToolTipText("Third Ingredient");
-		IngredientCheckBox3.setBounds(10, 207, 49, 23);
+		IngredientCheckBox3.setBounds(10, 181, 49, 23);
 		IngredientCheckBox3.setEnabled(false);
 		contentPane.add(IngredientCheckBox3);
 		
 		IngredientCheckBox4 = new JCheckBox("");
 		IngredientCheckBox4.setToolTipText("Fourth Ingredient");
-		IngredientCheckBox4.setBounds(10, 233, 49, 23);
+		IngredientCheckBox4.setBounds(10, 207, 49, 23);
 		IngredientCheckBox4.setEnabled(false);
 		contentPane.add(IngredientCheckBox4);
 	}
@@ -142,86 +141,86 @@ public class UI extends JFrame {
 		// TODO Auto-generated method stub
 		IngredientComboBox1a = new JComboBox<Object>();
 		IngredientComboBox1a.setEnabled(false);
-		IngredientComboBox1a.setBounds(77, 158, 130, 20);
+		IngredientComboBox1a.setBounds(77, 132, 130, 20);
 		contentPane.add(IngredientComboBox1a);
 		
 		IngredientComboBox2a = new JComboBox<Object>();
 		IngredientComboBox2a.setEnabled(false);
-		IngredientComboBox2a.setBounds(77, 184, 130, 20);
+		IngredientComboBox2a.setBounds(77, 158, 130, 20);
 		contentPane.add(IngredientComboBox2a);
 		
 		IngredientComboBox3a = new JComboBox<Object>();
 		IngredientComboBox3a.setEnabled(false);
-		IngredientComboBox3a.setBounds(77, 210, 130, 20);
+		IngredientComboBox3a.setBounds(77, 184, 130, 20);
 		contentPane.add(IngredientComboBox3a);		
 		
 		IngredientComboBox4a = new JComboBox<Object>();
 		IngredientComboBox4a.setEnabled(false);
-		IngredientComboBox4a.setBounds(77, 236, 130, 20);
+		IngredientComboBox4a.setBounds(77, 210, 130, 20);
 		contentPane.add(IngredientComboBox4a);
 		
 		BreadComboBox = new JComboBox<Object>();
-		BreadComboBox.setBounds(77, 127, 130, 20);
+		BreadComboBox.setBounds(77, 101, 130, 20);
 		contentPane.add(BreadComboBox);		
 		
 		IngredientComboBox1b = new JComboBox<Object>();
 		IngredientComboBox1b.setEnabled(false);
-		IngredientComboBox1b.setBounds(217, 158, 130, 20);
+		IngredientComboBox1b.setBounds(217, 132, 130, 20);
 		contentPane.add(IngredientComboBox1b);
 		
 		IngredientComboBox1c = new JComboBox<Object>();
 		IngredientComboBox1c.setEnabled(false);
-		IngredientComboBox1c.setBounds(355, 158, 130, 20);
+		IngredientComboBox1c.setBounds(355, 132, 130, 20);
 		contentPane.add(IngredientComboBox1c);
 		
 		IngredientComboBox1d = new JComboBox<Object>();
 		IngredientComboBox1d.setEnabled(false);
-		IngredientComboBox1d.setBounds(494, 158, 130, 20);
+		IngredientComboBox1d.setBounds(494, 132, 130, 20);
 		contentPane.add(IngredientComboBox1d);
 		
 		IngredientComboBox2b = new JComboBox<Object>();
 		IngredientComboBox2b.setEnabled(false);
-		IngredientComboBox2b.setBounds(217, 184, 130, 20);
+		IngredientComboBox2b.setBounds(217, 158, 130, 20);
 		contentPane.add(IngredientComboBox2b);
 		
 		IngredientComboBox2c = new JComboBox<Object>();
 		IngredientComboBox2c.setEnabled(false);
-		IngredientComboBox2c.setBounds(355, 184, 130, 20);
+		IngredientComboBox2c.setBounds(355, 158, 130, 20);
 		contentPane.add(IngredientComboBox2c);
 		
 		IngredientComboBox2d = new JComboBox<Object>();
 		IngredientComboBox2d.setEnabled(false);
-		IngredientComboBox2d.setBounds(494, 184, 130, 20);
+		IngredientComboBox2d.setBounds(494, 158, 130, 20);
 		contentPane.add(IngredientComboBox2d);
 		
 		IngredientComboBox3b = new JComboBox<Object>();
 		IngredientComboBox3b.setEnabled(false);
-		IngredientComboBox3b.setBounds(217, 210, 130, 20);
+		IngredientComboBox3b.setBounds(217, 184, 130, 20);
 		contentPane.add(IngredientComboBox3b);
 		
 		IngredientComboBox3c = new JComboBox<Object>();
 		IngredientComboBox3c.setEnabled(false);
-		IngredientComboBox3c.setBounds(355, 210, 130, 20);
+		IngredientComboBox3c.setBounds(355, 184, 130, 20);
 		contentPane.add(IngredientComboBox3c);
 		
 		IngredientComboBox3d = new JComboBox<Object>();
 		IngredientComboBox3d.setEnabled(false);
-		IngredientComboBox3d.setBounds(494, 210, 130, 20);
+		IngredientComboBox3d.setBounds(494, 184, 130, 20);
 		contentPane.add(IngredientComboBox3d);
 		
 		IngredientComboBox4b = new JComboBox<Object>();
 		IngredientComboBox4b.setEnabled(false);
-		IngredientComboBox4b.setBounds(217, 236, 130, 20);
+		IngredientComboBox4b.setBounds(217, 210, 130, 20);
 		contentPane.add(IngredientComboBox4b);
 		
 		IngredientComboBox4c = new JComboBox<Object>();
 		IngredientComboBox4c.setEnabled(false);
-		IngredientComboBox4c.setBounds(355, 236, 130, 20);
+		IngredientComboBox4c.setBounds(355, 210, 130, 20);
 		contentPane.add(IngredientComboBox4c);
 		
 		IngredientComboBox4d = new JComboBox<Object>();
 		IngredientComboBox4d.setEnabled(false);
-		IngredientComboBox4d.setBounds(494, 236, 130, 20);
+		IngredientComboBox4d.setBounds(494, 210, 130, 20);
 		contentPane.add(IngredientComboBox4d);
 	}
 	
@@ -523,6 +522,24 @@ public class UI extends JFrame {
 		UIQuarteDropDownListIngredientsHierarchy(ingredientCheckBox,ingredientComboBoxList);
 	
 	}
+	
+	private void CleanDropDownList() {
+		
+		IngredientCheckBox1.setSelected(false);
+		IngredientComboBox1List.get(0).setEnabled(false);
+		IngredientComboBox1List.get(0).removeAllItems();
+		IngredientComboBox1List.get(1).setEnabled(false);
+		IngredientComboBox1List.get(1).removeAllItems();
+		IngredientComboBox1List.get(2).setEnabled(false);
+		IngredientComboBox1List.get(2).removeAllItems();
+		IngredientComboBox1List.get(3).setEnabled(false);
+		IngredientComboBox1List.get(3).removeAllItems();
+		
+		IngredientCheckBox2.setSelected(true);		
+		IngredientCheckBox3.setSelected(true);
+		IngredientCheckBox4.setSelected(true);
+		CleanUISecondDropDownListIngredientsHierarchy();
+	}
 
 	private void UIListenersButtons() {
 		CleanerButton.addActionListener(new ActionListener() {
@@ -542,7 +559,20 @@ public class UI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				chckbxRestrictionsTreeMode.setSelected(false);
-				SandwichOntology.setVisibility(false);
+				SandwichOntology.setEnabled(false);
+				
+				if(!chckbxRestrictionsListMode.isSelected()) {
+					
+					CleanDropDownList();
+					chckbxRestrictionsTreeMode.setSelected(true);
+					BreadComboBox.setEnabled(false);
+					IngredientCheckBox1.setEnabled(false);					
+					
+				} else {
+															
+					BreadComboBox.setEnabled(true);
+					IngredientCheckBox1.setEnabled(true);
+				}
 				
 			}
 		});
@@ -552,11 +582,18 @@ public class UI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				if(!chckbxRestrictionsTreeMode.isSelected()){
-					SandwichOntology.setVisibility(false);
-				}
-				else{
-					SandwichOntology.setVisibility(true);
+					
+					SandwichOntology.setEnabled(false);
+					chckbxRestrictionsListMode.setSelected(true);
+					BreadComboBox.setEnabled(true);
+					IngredientCheckBox1.setEnabled(true);
+					
+				} else{
+					CleanDropDownList();
+					SandwichOntology.setEnabled(true);
 					chckbxRestrictionsListMode.setSelected(false);
+					BreadComboBox.setEnabled(false);
+					IngredientCheckBox1.setEnabled(false);
 				}		
 
 			}
@@ -570,7 +607,7 @@ public class UI extends JFrame {
 		setResizable(false);
 		setTitle("Recomendador de Sandwiches");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 650, 524);
+		setBounds(100, 100, 1050, 524);
 		contentPane = new JPanel();
 		
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -583,7 +620,7 @@ public class UI extends JFrame {
 		contentPane.add(textArea);
 		
 		JLabel lblIngredients = new JLabel("INGREDIENTES:");
-		lblIngredients.setBounds(10, 102, 92, 14);
+		lblIngredients.setBounds(10, 76, 92, 14);
 		contentPane.add(lblIngredients);
 		
 		UILoadCheckBoxes(contentPane);
@@ -609,7 +646,6 @@ public class UI extends JFrame {
 		IngredientComboBox4List.add(IngredientComboBox4c);
 		IngredientComboBox4List.add(IngredientComboBox4d);
 		
-		//DataIngredients = new SandwichIngredients();
 		
 		BreadComboBox.setEnabled(true);
 		for(int i=0; i<BreadIngredient.getBreadTypesLength(); i++)
@@ -618,7 +654,6 @@ public class UI extends JFrame {
 		}
 		BreadComboBox.setSelectedItem(BreadIngredient.getBreadTypes()[0]);		
 		
-		//UIListenersControl(IngredientCheckBox1,IngredientComboBox1List);
 		
 		UIListenersControl(IngredientCheckBox1,IngredientComboBox1List);
 		UIListenersControl(IngredientCheckBox2,IngredientComboBox2List);
@@ -634,7 +669,7 @@ public class UI extends JFrame {
 		contentPane.add(CleanerButton);
 		
 		JLabel lblSelctedMode = new JLabel("MODO DE SELECI\u00D3N:");
-		lblSelctedMode.setBounds(10, 11, 110, 14);
+		lblSelctedMode.setBounds(10, 11, 158, 14);
 		contentPane.add(lblSelctedMode);
 		
 		chckbxRestrictionsListMode = new JCheckBox("Listas");
@@ -646,13 +681,10 @@ public class UI extends JFrame {
 		chckbxRestrictionsTreeMode.setBounds(109, 32, 59, 23);
 		contentPane.add(chckbxRestrictionsTreeMode);
 		
-		JPanel PanelTreeIngredientsSelected = new JPanel();
-		PanelTreeIngredientsSelected.setBounds(10, 62, 613, 29);
-		contentPane.add(PanelTreeIngredientsSelected);
-		
-		Checkbox checkboxDeleteItems = new Checkbox("Borrar");
-		checkboxDeleteItems.setBounds(575, 34, 49, 22);
-		contentPane.add(checkboxDeleteItems);
+		panelTreeRestrictionsContainer = new JPanel();
+		panelTreeRestrictionsContainer.setBounds(634, 30, 400, 454);
+		contentPane.add(panelTreeRestrictionsContainer);
+		panelTreeRestrictionsContainer.setLayout(new BoxLayout(panelTreeRestrictionsContainer, BoxLayout.X_AXIS));
 		
 		UIListenersButtons();		
 		UIListenersChecks();

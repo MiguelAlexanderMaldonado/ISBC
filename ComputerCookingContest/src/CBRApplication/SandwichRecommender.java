@@ -3,10 +3,14 @@ package CBRApplication;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
+
+import org.omg.stub.java.rmi._Remote_Stub;
 
 import OntoBridge.SandwichOntology;
 import UI.UIRecommender;
@@ -29,7 +33,7 @@ public class SandwichRecommender {
 	private Connector _connector;
 	private CBRCaseBase _caseBase;	
 	private static UIRecommender _frame;
-	private static SandwichOntology _sandwichOntology;
+	private static SandwichRecommender srApp = null;
 	
 	public void configure() throws ExecutionException{
 		try{
@@ -39,8 +43,8 @@ public class SandwichRecommender {
 			
 			_connector.initFromXMLfile(FileIO.findFile("src/DBConfig/databaseconfig.xml"));
 			//La organización en memoria será lineal
-			_caseBase = new LinealCaseBase();
-		
+			_caseBase = new LinealCaseBase();	
+			
 		}catch (Exception e){
 			throw new ExecutionException(e);
 		}
@@ -68,7 +72,8 @@ public class SandwichRecommender {
 		DBConnection.HSQLDBserver.init();
 		
 		//Crea el objeto que implementa la aplicación CBR
-		final SandwichRecommender srApp = new SandwichRecommender();
+		//final SandwichRecommender srApp = new SandwichRecommender();
+		srApp = new SandwichRecommender();
 		
 		try{
 			//Configuración
@@ -107,28 +112,25 @@ public class SandwichRecommender {
 							}
 						});			
 						
-						//Crea una instancia del árbol (ontología)
-						_sandwichOntology = new SandwichOntology();						
-										
-						
 						_frame.setVisible(true);
-						_sandwichOntology.getOntologyTreeWindow().setVisible(false);
 						
-						
+					
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
-				private void executeCycle() throws ExecutionException {
-					// TODO Auto-generated method stub
-					//ObtainQueryWithFormMethod.obtainQueryWithoutInitialValues(query, null, null);
-					srApp.cycle(recordQuery());
-				}
+
 			});
 		}catch(Exception e){
 			org.apache.commons.logging.LogFactory.getLog(SandwichRecommender.class).error(e);
 		}
 		
+	}
+	
+	private static void executeCycle() throws ExecutionException {
+		// TODO Auto-generated method stub
+		//ObtainQueryWithFormMethod.obtainQueryWithoutInitialValues(query, null, null);
+		srApp.cycle(recordQuery());
 	}
 	
 	/**
