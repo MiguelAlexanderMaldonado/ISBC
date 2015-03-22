@@ -459,8 +459,26 @@ public class SandwichRecommender {
 		ArrayList<CBRCase> cases =	CasesFilter(querys,_caseBase.getCases());
 		
 		for(CBRCase _case : cases) {				
-				//System.out.println(_case);				
+				//System.out.println(_case);
+			SandwichDescription description = new SandwichDescription();
+			
+			_frame.getTextArea().append("____________________________________" + "\n"); 
+			
+			if(_case.getDescription() instanceof JointSandwichDescription){
+				
+				JointSandwichDescription _description = (JointSandwichDescription)_case.getDescription();
+				ArrayList<String> ingredients = _description.getIngredients();
+				
+				_frame.getTextArea().append(ingredients.get(0) + " " + ingredients.get(1) + " " +
+											ingredients.get(2) + " " + ingredients.get(3) + " " +
+											ingredients.get(4) + "\n");
+				_frame.getTextArea().append("____________________________________" + "\n"); 
+			} else {
+			
 				_frame.getTextArea().append(_case.getDescription().toString() + "\n");
+				_frame.getTextArea().append("____________________________________" + "\n"); 
+				
+			}
 		}
 		
 		System.out.println("Número de querys: " + Integer.toString(querys.size()));
@@ -494,7 +512,25 @@ public class SandwichRecommender {
 				
 				CBRCase currentCase = it.next();
 				
-				SandwichDescription description = (SandwichDescription)currentCase.getDescription();
+				SandwichDescription description = new SandwichDescription();
+				
+				if(currentCase.getDescription() instanceof JointSandwichDescription){
+					
+					JointSandwichDescription _description = (JointSandwichDescription)currentCase.getDescription();
+					ArrayList<String> ingredients = _description.getIngredients();
+					
+					description.setIngredient1(ingredients.get(0));
+					description.setIngredient2(ingredients.get(1));	
+					description.setIngredient3(ingredients.get(2));
+					description.setIngredient4(ingredients.get(3));
+					description.setIngredient5(ingredients.get(4));
+					
+				} else {
+					
+					description = (SandwichDescription)currentCase.getDescription();
+					
+				}
+				
 				String[] ingredients = description.toString().split("\\(|(;)|\\)");
 				
 				ArrayList<String> caseIngredients = new ArrayList<String>();
