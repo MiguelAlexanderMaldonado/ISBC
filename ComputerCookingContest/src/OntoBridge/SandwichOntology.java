@@ -122,7 +122,7 @@ public class SandwichOntology {
 				@Override
 				public void mousePressed(MouseEvent arg0) {
 					// TODO Auto-generated method stub
-					int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea borrarlo?","Warning",JOptionPane.YES_NO_OPTION);
+					int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea borrar la restricción?","",JOptionPane.YES_NO_OPTION);
 					
 					if(dialogResult == JOptionPane.YES_OPTION) {
 						
@@ -152,7 +152,7 @@ public class SandwichOntology {
 				@Override
 				public void mousePressed(MouseEvent arg0) {
 					// TODO Auto-generated method stub
-					int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea borrarlo?","Warning",JOptionPane.YES_NO_OPTION);
+					int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea borrar la restricción?","",JOptionPane.YES_NO_OPTION);
 					
 					if(dialogResult == JOptionPane.YES_OPTION) {
 						
@@ -186,7 +186,7 @@ public class SandwichOntology {
 	 */
 	public static void getSelectedConcept(String concept) {
 		
-		int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea añadirlo?","Warning",JOptionPane.YES_NO_OPTION);
+		int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea añadirla?","",JOptionPane.YES_NO_OPTION);
 	
 		concept = StringEvaluator.getLastWord(treeRestrictions.getSelectedConcept(),", ");
 		
@@ -198,7 +198,7 @@ public class SandwichOntology {
 				
 			if(dialogResult == JOptionPane.YES_OPTION) {
 				
-				int dialogResult2 = JOptionPane.showConfirmDialog (null, "¿Desea que el sandwich contenga ese ingrediente?","Warning",JOptionPane.YES_NO_OPTION);
+				int dialogResult2 = JOptionPane.showConfirmDialog (null, "¿Desea que el sándwich contenga esa restricción?","",JOptionPane.YES_NO_OPTION);
 										
 				if(dialogResult2 == JOptionPane.YES_OPTION ) {
 					
