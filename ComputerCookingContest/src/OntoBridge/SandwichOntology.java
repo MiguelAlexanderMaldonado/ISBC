@@ -1,7 +1,6 @@
 package OntoBridge;
 
 import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -24,21 +23,24 @@ public class SandwichOntology {
 	private static PnlConceptsTree treeRestrictions;						//Árbol de restricciones	
 	private static JPanel panelContainerRestrictions = new JPanel();		//Panel contenedor
 	private static JPanel panelSelectedRestrictions = new JPanel();			//Panel para las restricciones que se seleccionan
-	private static ArrayList<String> restrictions = new ArrayList<String>();//Array en el que se registran las restricciones
-	
+	private static ArrayList<String> positiveRestrictions = new ArrayList<String>();//Array en el que se registran las restricciones positivas
+	private static ArrayList<String> negativeRestrictions = new ArrayList<String>();//Array en el que se registran las restricciones negativas
+	private static OntoBridge ob;
+	private static boolean isTpeSandwichAdded = false;
+
 	/**
 	 * @wbp.parser.entryPoint
 	 */
 	public SandwichOntology() {
 		
-		OntoBridge ob = new OntoBridge();
+		ob = new OntoBridge();
 		ob.initWithPelletReasoner();
 		
 		OntologyDocument mainOnto = new OntologyDocument(FileIO.findFile(FICHERO_OWL).toExternalForm());
 		ArrayList<OntologyDocument> subOntologies = new ArrayList<OntologyDocument>();
 		
-		ob.loadOntology(mainOnto, subOntologies, true);
-		
+		ob.loadOntology(mainOnto, subOntologies, false);
+				
 		treeRestrictions = new PnlConceptsTree(ob);		
 		
 		panelContainerRestrictions.setLayout(new BoxLayout(panelContainerRestrictions, BoxLayout.X_AXIS));
@@ -59,13 +61,31 @@ public class SandwichOntology {
 		return panelContainerRestrictions;		
 	}
 	
+	public ArrayList<String> getPositiveRestrictions(){
+		
+		return positiveRestrictions;
+		
+	}
+	
+	public ArrayList<String> getNegativeRestrictions(){
+		
+		return negativeRestrictions;
+		
+	}
+	
+	public static OntoBridge getOntoBridge() { 
+		
+		return ob;
+		
+	}
+	
 	/**
 	 * 
 	 * @param visible
 	 * False:	Se inhabilita la selección en el árbol de restricciones.
 	 * True:	Se habilita la selección.
 	 */
-	public static void setEnabled(boolean visible){
+	public static void setEnabled(boolean visible) {
 		
 		if(visible) {
 			
@@ -74,8 +94,9 @@ public class SandwichOntology {
 		} else {
 			//Se cambia el indice mínimo de selección a infinito (Esto inhabilita la selección)
 			treeRestrictions.setMinIndexOfSelections(Integer.MAX_VALUE);
-			//Se limpia el array de restricciones
-			restrictions.clear();
+			//Se limpian los arrays de restricciones
+			positiveRestrictions.clear();
+			negativeRestrictions.clear();
 			addRestrictions();
 		}
 		
@@ -91,12 +112,12 @@ public class SandwichOntology {
 		panelSelectedRestrictions.setLayout(new GridLayout(10, 1));
 		
 		// Por cada restricción del array se crea un botón que se añade al panel de restricciones
-		for(int i=0; i <restrictions.size(); i++) {
+		for(int i=0; i <positiveRestrictions.size(); i++) {
 			
-			final JButton restrictionButton = new JButton(restrictions.get(i));
-			restrictionButton.setBackground(Color.LIGHT_GRAY);
+			final JButton positiveRestrictionButton = new JButton(positiveRestrictions.get(i));
+			positiveRestrictionButton.setBackground(Color.green);
 			
-			restrictionButton.addMouseListener(new MouseAdapter() {
+			positiveRestrictionButton.addMouseListener(new MouseAdapter() {
 								
 				@Override
 				public void mousePressed(MouseEvent arg0) {
@@ -105,21 +126,52 @@ public class SandwichOntology {
 					
 					if(dialogResult == JOptionPane.YES_OPTION) {
 						
-						restrictions.remove(restrictions.indexOf(restrictionButton.getText()));
+						positiveRestrictions.remove(positiveRestrictions.indexOf(positiveRestrictionButton.getText()));
 						addRestrictions();
 					}
 				}
 			});
 			
-			restrictionButton.setVisible(true);
-			restrictionButton.validate();			
-			panelSelectedRestrictions.add(restrictionButton, BorderLayout.EAST);
+			positiveRestrictionButton.setVisible(true);
+			positiveRestrictionButton.validate();			
+			panelSelectedRestrictions.add(positiveRestrictionButton, BorderLayout.EAST);
 			panelSelectedRestrictions.setVisible(true);
 			
 			panelContainerRestrictions.repaint();
 			panelContainerRestrictions.validate();
 			
 		}	
+		
+		for(int j=0; j <negativeRestrictions.size(); j++) {
+			
+			final JButton negativeRestrictionButton = new JButton(negativeRestrictions.get(j));
+			negativeRestrictionButton.setBackground(Color.red);
+			
+			negativeRestrictionButton.addMouseListener(new MouseAdapter() {
+								
+				@Override
+				public void mousePressed(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea borrarlo?","Warning",JOptionPane.YES_NO_OPTION);
+					
+					if(dialogResult == JOptionPane.YES_OPTION) {
+						
+						negativeRestrictions.remove(negativeRestrictions.indexOf(negativeRestrictionButton.getText()));
+						addRestrictions();
+					}
+				}
+			});
+			
+			negativeRestrictionButton.setVisible(true);
+			negativeRestrictionButton.validate();			
+			panelSelectedRestrictions.add(negativeRestrictionButton, BorderLayout.EAST);
+			panelSelectedRestrictions.setVisible(true);
+			
+			panelContainerRestrictions.repaint();
+			panelContainerRestrictions.validate();
+			
+		}
+		
 		
 		panelContainerRestrictions.add(panelSelectedRestrictions, BorderLayout.WEST);
 		panelContainerRestrictions.repaint();
@@ -128,7 +180,7 @@ public class SandwichOntology {
 	}
 	
 	/**
-	 * Añade al array de restricciones y al panel de restricciones
+	 * Añade a los arrays de restricciones y al panel de restricciones
 	 * el elemento seleccionado en el árbol.
 	 * @param concept
 	 */
@@ -136,19 +188,65 @@ public class SandwichOntology {
 		
 		int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea añadirlo?","Warning",JOptionPane.YES_NO_OPTION);
 	
-		if(dialogResult == JOptionPane.YES_OPTION) {
+		concept = StringEvaluator.getLastWord(treeRestrictions.getSelectedConcept(),", ");
+		
+		if(positiveRestrictions.size()<1)
+			isTpeSandwichAdded = false;
+		
+		
+		if(!concept.equals("SandwichIngredients") && !concept.equals("Sandwich") && !concept.equals("SandwichBase")) {
+				
+			if(dialogResult == JOptionPane.YES_OPTION) {
+				
+				int dialogResult2 = JOptionPane.showConfirmDialog (null, "¿Desea que el sandwich contenga ese ingrediente?","Warning",JOptionPane.YES_NO_OPTION);
+										
+				if(dialogResult2 == JOptionPane.YES_OPTION ) {
+					
+					if(!isTpeSandwichAdded) {
+					
+						positiveRestrictions.add(concept);
+						addRestrictions();
+						
+					}else {
+						
+						JOptionPane.showMessageDialog(null, "No se pueden añadir más");		
+						
+					}
+					
+					if(OntologyUsefulFunctions.getSuperClass(concept).equals("Sandwich"))
+						isTpeSandwichAdded = true;					
+					
+				}else {
+					
+					if(negativeRestrictions.size()<2) {
+					
+						if(!OntologyUsefulFunctions.getSuperClass(concept).equals("Sandwich")) {
+						
+							negativeRestrictions.add(concept);
+							addRestrictions();
+													
+						}else JOptionPane.showMessageDialog(null, "No se puede añadir, tipo no válido");							
+						
+					}else JOptionPane.showMessageDialog(null, "No se pueden añadir más");					
+					
+				}	
+				
+				if(isTpeSandwichAdded) {
+					
+					if(positiveRestrictions.size()>1) {
+						
+						positiveRestrictions.clear();
+						positiveRestrictions.add(concept);
+						addRestrictions();
+						
+					}
+					
+				}
+				
+			}				
 			
-			concept = StringEvaluator.getLastWord(treeRestrictions.getSelectedConcept(),", ");
-			restrictions.add(concept);
-			addRestrictions();
-			
-			System.out.println( concept +  " añadido");			
-			
-		}else {			
-			
-			System.out.println( concept +  " no añadido");
-			
-		}
+		} else JOptionPane.showMessageDialog(null, "No se puede añadir, tipo no válido");	
 		
 	}
+
 }

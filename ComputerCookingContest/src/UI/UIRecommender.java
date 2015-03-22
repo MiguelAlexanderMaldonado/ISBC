@@ -6,6 +6,8 @@ import java.awt.TextArea;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+
 import OntoBridge.SandwichOntology;
 import Utils.LevelChildHierarchy;
 
@@ -29,26 +31,27 @@ import javax.swing.JLabel;
 @SuppressWarnings("serial")
 public class UIRecommender extends UI {
 	
-
-	private SandwichOntology _sandwichOntology;
-	
-	public UIRecommender()
-	{
-		panelTreeRestrictionsContainer.setBounds(634, 32, 390, 463);
-		new UI();
+	public UIRecommender() {		
 		
-		//Crea una instancia del árbol (ontología)
-		_sandwichOntology = new SandwichOntology();		
+		new UI();	
+
+	}
+	
+	public void configuredSandwichOntology(SandwichOntology sandwichOntology) {
+		
+		panelTreeRestrictionsContainer.setBounds(634, 32, 390, 463);
 		
 		panelTreeRestrictionsContainer.setLayout(new BoxLayout(panelTreeRestrictionsContainer, BoxLayout.LINE_AXIS));
-		panelTreeRestrictionsContainer.add(_sandwichOntology.getPanelContainerRestrictions(), BorderLayout.CENTER);
+		panelTreeRestrictionsContainer.add(sandwichOntology.getPanelContainerRestrictions(), BorderLayout.CENTER);
 		
 		JLabel label = new JLabel("Restricciones: ");
 		label.setBounds(913, 7, 92, 14);
 		getContentPane().add(label);
 
 		SandwichOntology.setEnabled(false);
+		
 	}
+	
 	
 	public Object getBreadIngredient()
 	{
@@ -238,4 +241,17 @@ public class UIRecommender extends UI {
 	{
 		return textArea;
 	}
+	
+	public JCheckBox getChckbxRestrictionsListMode(){
+		
+		return chckbxRestrictionsListMode;
+		
+	}
+	
+	public JCheckBox getChckbxRestrictionsTreeMode(){
+		
+		return chckbxRestrictionsTreeMode;
+		
+	}
+	
 }

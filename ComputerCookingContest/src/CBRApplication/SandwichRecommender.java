@@ -3,17 +3,17 @@ package CBRApplication;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
-import org.omg.stub.java.rmi._Remote_Stub;
-
+import OntoBridge.OntologyUsefulFunctions;
 import OntoBridge.SandwichOntology;
+import OntoBridge.OntologySimilarityFuntion;
 import UI.UIRecommender;
+import Utils.StringEvaluator;
 
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbrcore.Attribute;
@@ -23,9 +23,12 @@ import jcolibri.cbrcore.CBRQuery;
 import jcolibri.cbrcore.Connector;
 import jcolibri.connector.DataBaseConnector;
 import jcolibri.exception.InitializingException;
+import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
+import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
 import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
+import jcolibri.method.retrieve.selection.SelectCases;
 import jcolibri.util.FileIO;
 
 public class SandwichRecommender {
@@ -33,7 +36,11 @@ public class SandwichRecommender {
 	private Connector _connector;
 	private CBRCaseBase _caseBase;	
 	private static UIRecommender _frame;
+	private static SandwichOntology _sandwichOntology;
 	private static SandwichRecommender srApp = null;
+	private ArrayList<ArrayList<String>> finalSandwichs = new ArrayList<ArrayList<String>>();
+    private int k = 5;	//Número de casos que se devuelven como resultado
+
 	
 	public void configure() throws ExecutionException{
 		try{
@@ -50,6 +57,12 @@ public class SandwichRecommender {
 		}
 	}
 	
+	/**
+	 * PreCycle
+	 * @return
+	 * @throws ExecutionException
+	 * @throws InitializingException
+	 */
 	public CBRCaseBase preCycle() throws ExecutionException, InitializingException{
 		// TODO Auto-generated method stub
 		//Carga los casos desde el conector a la base de casos
@@ -62,10 +75,14 @@ public class SandwichRecommender {
 		return _caseBase;
 	}
 	
+	/**
+	 * PostCycle
+	 * @throws ExecutionException
+	 */
 	public void postCycle() throws ExecutionException{
 		this._caseBase.close();
 	}
-	
+		
 	public static void main(String[] args){
 		
 		//Lanzar el SGBD
@@ -112,6 +129,11 @@ public class SandwichRecommender {
 							}
 						});			
 						
+						//Crea una instancia del árbol (ontología)
+						_sandwichOntology = new SandwichOntology();	
+						
+						_frame.configuredSandwichOntology(_sandwichOntology);
+						
 						_frame.setVisible(true);
 						
 					
@@ -127,11 +149,259 @@ public class SandwichRecommender {
 		
 	}
 	
+	/**
+	 * Cycle
+	 * Método que ejecuta el ciclo de la aplicación CBR.
+	 * @throws ExecutionException
+	 */
 	private static void executeCycle() throws ExecutionException {
-		// TODO Auto-generated method stub
-		//ObtainQueryWithFormMethod.obtainQueryWithoutInitialValues(query, null, null);
-		srApp.cycle(recordQuery());
+				
+		if(_frame.getChckbxRestrictionsListMode().isSelected())
+			srApp.cycle(recordQuery());
+		else if(_frame.getChckbxRestrictionsTreeMode().isSelected())
+			srApp.cycleWithOntology(recordQueryOntology());
 	}
+	
+	//-------------- Métodos para la ejecución del ciclo empleando la ontología ------------
+	
+	/**
+	 * Construye la query con las restricciones del modo = Árbol (Ontología)
+	 * @return
+	 */
+	private static CBRQuery recordQueryOntology() {
+		
+		CBRQuery query = new CBRQuery();
+		JointSandwichDescription sd = new JointSandwichDescription();			
+		
+		sd.setIngredients(_sandwichOntology.getPositiveRestrictions());
+			
+		query.setDescription(sd);
+		
+		return query;	
+	}
+	
+	/**
+	 * Cambia el formato de la descripción de los casos para que estos puedan ser evaluados
+	 * mediante el uso de la ontología.
+	 * (BBDD) SandwichDescription -> JointSandwichDescription
+	 * @param caseBase
+	 * @return
+	 */
+	private Collection<CBRCase> getFormatedCases(Collection<CBRCase> caseBase) {
+		
+		Collection<CBRCase> auxCaseBase = caseBase;
+		
+		Iterator<CBRCase> iterator = caseBase.iterator();
+
+		System.out.println("Nuevo formato de la descripción de los casos: Lista de ingredientes");
+		
+		iterator = auxCaseBase.iterator();
+		
+		while(iterator.hasNext()) {
+						
+			CBRCase _case = iterator.next();
+			
+			if(! (_case.getDescription() instanceof JointSandwichDescription)) {
+			
+				JointSandwichDescription _caseComponent = new JointSandwichDescription();
+				_caseComponent.setIngredients(StringEvaluator.getWords(_case.getDescription().toString(), ";"));
+				_case.setDescription(_caseComponent);			
+			}
+			
+			System.out.println(((JointSandwichDescription)_case.getDescription()).getIngredients().toString());
+			
+		}
+		return auxCaseBase;
+	}
+	
+	/**
+	 * Filtra los sándwiches con las restricciones negativas.
+	 * @param sandwichs
+	 */
+	private void negativeRestrictionsFilter(ArrayList<ArrayList<String>> sandwichs) {
+		
+		ArrayList<String> negativeRestrictions = _sandwichOntology.getNegativeRestrictions();
+		
+		int index = 0;
+		
+		while(index < negativeRestrictions.size()) {
+			
+			for(int i=0; i<sandwichs.size(); i++) {
+			
+				//Si la restricción no es una hoja 
+				if(!OntologyUsefulFunctions.isLastChild(negativeRestrictions.get(index))) { 
+					
+					//Ingredientes hoja de la restricción
+					ArrayList<String> childsNegativeRestrictions = OntologyUsefulFunctions.getLastChilds(negativeRestrictions.get(index));
+					//Hermanos de la restricción
+					ArrayList<String> brothers = OntologyUsefulFunctions.getBrothers(negativeRestrictions.get(index));
+					
+					if(brothers.contains(negativeRestrictions.get(index))){
+						
+						brothers.remove(brothers.indexOf(negativeRestrictions.get(index)));
+						
+					}
+					
+					//Compruebo que no se haya filtrado ya por un hermano de la actual restricción
+					for(int p=0; p<negativeRestrictions.size(); p++) {
+						
+						if(brothers.contains(negativeRestrictions.get(p)))
+							brothers.remove(brothers.indexOf(negativeRestrictions.get(p)));
+						
+					}					
+					
+					//Hojas de los hermanos de la restricción
+					ArrayList<String> childsOfBrothers = new ArrayList<String>();
+					
+					for(int j=0; j<brothers.size(); j++) {
+						
+						childsOfBrothers.addAll(OntologyUsefulFunctions.getLastChilds(brothers.get(j)));
+						
+					}
+					
+					Random r = new Random();								
+					int k = 0;
+					boolean replaced = false;
+					
+					//Se reemplaza el ingrediente del sandwich que cumple la restricción
+					//con un ingrediente hoja de los hermanos de la restricción
+					while (!replaced && k<childsNegativeRestrictions.size()) {
+						
+						int l=0;
+
+						while( l<sandwichs.get(i).size()) {
+							
+							if(sandwichs.get(i).get(l).contains(childsNegativeRestrictions.get(k))) {
+								
+								String sandwich = "";								
+								sandwich = sandwichs.get(i).get(l).replace(childsNegativeRestrictions.get(k), childsOfBrothers.get(r.nextInt(childsOfBrothers.size()))); 
+								
+								finalSandwichs.get(i).set(l, sandwich);
+								
+							}						
+						
+							l++;
+						}
+						
+						k++;
+						
+					}					
+					
+				} else {
+					
+					//Ingredientes hoja de la restricción
+					ArrayList<String> childsNegativeRestrictions = OntologyUsefulFunctions.getLastChilds(OntologyUsefulFunctions.getSuperClass(negativeRestrictions.get(index)));
+					childsNegativeRestrictions.remove(negativeRestrictions.get(index));
+					
+					//Compruebo que no se haya filtrado ya por un hermano de la actual restricción
+					for(int p=0; p<negativeRestrictions.size(); p++) {
+						
+						if(childsNegativeRestrictions.contains(negativeRestrictions.get(p)))
+							childsNegativeRestrictions.remove(childsNegativeRestrictions.indexOf(negativeRestrictions.get(p)));
+						
+					}	
+					
+					Random r = new Random();	
+					int k = 0;
+					boolean replaced = false;
+					
+					//Se reemplaza el ingrediente del sandwich que cumple la restricción
+					//con un ingrediente hoja de los hermanos de la restricción
+					while (!replaced && k<negativeRestrictions.size()) {
+						
+						int l=0;
+
+						while( l<sandwichs.get(i).size()) {
+							
+							if(sandwichs.get(i).get(l).contains(negativeRestrictions.get(k))) {
+								
+								String sandwich = "";								
+								sandwich = sandwichs.get(i).get(l).replace(negativeRestrictions.get(k), childsNegativeRestrictions.get(r.nextInt(childsNegativeRestrictions.size()))); 
+								
+								finalSandwichs.get(i).set(l, sandwich);
+								
+							}						
+						
+							l++;
+						}
+						
+						k++;
+						
+					}			
+					
+				}
+			
+			}
+			
+			index++;
+			sandwichs = finalSandwichs;
+		}		
+		
+	}
+	
+	/***
+	 * Cycle adecuado para el empleo de la ontología.
+	 * @param query
+	 * @throws ExecutionException
+	 */
+	public void cycleWithOntology(CBRQuery query) throws ExecutionException
+	{
+        // Primero configuramos el KNN Retrieval Method
+        NNConfig simConfig = new NNConfig();
+
+        // Toma la media como funcion global de similitud del caso
+        simConfig.setDescriptionSimFunction(new Average());
+        
+		simConfig.addMapping(new Attribute("ingredients", JointSandwichDescription.class), new OntologySimilarityFuntion());        
+        
+		//Casos
+		Collection<CBRCase> cases = _caseBase.getCases();
+		
+		// Ejecutamos NN
+        Collection <RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(getFormatedCases(cases),query,simConfig);
+
+        // Se seleccionan los k casos de la recuperación
+        eval = SelectCases.selectTopKRR(eval, k);
+        
+        Iterator<RetrievalResult> _iterator =  eval.iterator();        
+        RetrievalResult _rr;
+        
+        //Se limpia el array de resultados
+        finalSandwichs.clear();
+        
+        while(_iterator.hasNext()) {
+        	
+        	_rr = _iterator.next();
+        	JointSandwichDescription _jd = (JointSandwichDescription) _rr.get_case().getDescription();
+        	finalSandwichs.add(_jd.getIngredients());
+        }	
+        	
+        //Filtrado por restricciones negativas
+    	if(_sandwichOntology.getNegativeRestrictions().size() > 0) {
+    		
+    		negativeRestrictionsFilter(finalSandwichs);
+    		
+    	}   	
+    	
+    	_frame.getTextArea().append("____________________________________" + "\n");
+    	 
+    	for(int i=0; i<finalSandwichs.size(); i++) {
+    		
+    		for(int j=0; j<finalSandwichs.get(i).size(); j++) {
+    			
+    			_frame.getTextArea().append(finalSandwichs.get(i).get(j).toString() + " ");	
+    			
+    		}
+    		_frame.getTextArea().append("\n");
+    		_frame.getTextArea().append("____________________________________" + "\n"); 
+    	}
+        	      	
+//        	_frame.getTextArea().append( _rr.getEval() + "\n");  	                     
+
+	}
+	
+	//-------------------------------------------------------------------------------------------
+	//-------------- Métodos para la ejecución del ciclo sin la ontología -----------------------
 	
 	/**
 	 * Devuelve todas las consultas que se pueden generar atendiendo al número y a los tipos de 
@@ -188,9 +458,8 @@ public class SandwichRecommender {
 					
 		ArrayList<CBRCase> cases =	CasesFilter(querys,_caseBase.getCases());
 		
-		for(CBRCase _case : cases){
-				
-				System.out.println(_case);				
+		for(CBRCase _case : cases) {				
+				//System.out.println(_case);				
 				_frame.getTextArea().append(_case.getDescription().toString() + "\n");
 		}
 		

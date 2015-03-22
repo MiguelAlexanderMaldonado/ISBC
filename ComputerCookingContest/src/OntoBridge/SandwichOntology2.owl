@@ -1,0 +1,560 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns="http://www.owl-ontologies.com/Ontology1414156932.owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xml:base="http://www.owl-ontologies.com/Ontology1414156932.owl" > 
+  <rdf:Description rdf:nodeID="A0">
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+    <owl:someValuesFrom rdf:resource="#Derivatives"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Chile">
+    <owl:disjointWith rdf:resource="#Tomato"/>
+    <owl:disjointWith rdf:resource="#Pepper"/>
+    <owl:disjointWith rdf:resource="#Avocado"/>
+    <rdfs:subClassOf rdf:resource="#VegetalFruit"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A1">
+    <rdf:rest rdf:nodeID="A2"/>
+    <rdf:first rdf:resource="#Sauces"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Vegetable">
+    <rdfs:subClassOf rdf:resource="#Vegetals"/>
+    <owl:disjointWith rdf:resource="#Fruit"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#LactoseIntolerantSandwich">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#NonLactoseIntolerantSandwich"/>
+    <rdfs:subClassOf rdf:nodeID="A3"/>
+    <rdfs:subClassOf rdf:resource="#Sandwich"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Plant">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="#Vegetable"/>
+    <owl:disjointWith rdf:resource="#VegetalFruit"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#hasIngredient">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <owl:inverseOf rdf:resource="#isIngredientOf"/>
+    <rdfs:range rdf:resource="#SandwichIngredients"/>
+    <rdfs:domain rdf:resource="#Sandwich"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Fruit">
+    <owl:disjointWith rdf:resource="#Vegetable"/>
+    <rdfs:subClassOf rdf:resource="#Vegetals"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A4">
+    <rdf:first rdf:nodeID="A5"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Ketchup">
+    <rdfs:subClassOf rdf:resource="#Sauces"/>
+    <owl:disjointWith rdf:resource="#Mayonnaise"/>
+    <owl:disjointWith rdf:resource="#GarlicSauce"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#CarnivorousSandwich">
+    <owl:disjointWith rdf:resource="#VegetarianSandwich"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:nodeID="A6"/>
+    <rdfs:subClassOf rdf:resource="#Sandwich"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Sandwich">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:nodeID="A7"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <owl:disjointWith rdf:resource="#SandwichBase"/>
+    <owl:disjointWith rdf:resource="#SandwichIngredients"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A6">
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:someValuesFrom rdf:resource="#Meat"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Tuna">
+    <owl:disjointWith rdf:resource="#Salmon"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="#Fish"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#isIngredientOf">
+    <owl:inverseOf rdf:resource="#hasIngredient"/>
+    <rdfs:range rdf:resource="#Sandwich"/>
+    <rdfs:domain rdf:resource="#SandwichIngredients"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A8">
+    <rdf:first rdf:resource="#Vegetals"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Cheese">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Margarine"/>
+    <rdfs:subClassOf rdf:resource="#Dairy"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Veal">
+    <rdfs:subClassOf rdf:resource="#Meat"/>
+    <owl:disjointWith rdf:resource="#Lamb"/>
+    <owl:disjointWith rdf:resource="#Pig"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Sauces">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="#ProcessedFoods"/>
+    <owl:disjointWith rdf:resource="#Dairy"/>
+    <owl:disjointWith rdf:resource="#Dressing"/>
+    <owl:disjointWith rdf:resource="#Mermelades"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Duck">
+    <owl:disjointWith rdf:resource="#Turkey"/>
+    <owl:disjointWith rdf:resource="#Chicken"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="#Bird"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A9">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:someValuesFrom rdf:resource="#Vegetals"/>
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Pig">
+    <rdfs:subClassOf rdf:resource="#Meat"/>
+    <owl:disjointWith rdf:resource="#Lamb"/>
+    <owl:disjointWith rdf:resource="#Veal"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A2">
+    <rdf:first rdf:nodeID="A10"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#PeachMermelade">
+    <rdfs:subClassOf rdf:resource="#Mermelades"/>
+    <owl:disjointWith rdf:resource="#StrawberryMermelade"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Lettuce">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Spinach"/>
+    <rdfs:subClassOf rdf:resource="#Plant"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A11">
+    <rdf:rest rdf:nodeID="A12"/>
+    <rdf:first rdf:resource="#Derivatives"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A13">
+    <rdf:rest rdf:nodeID="A4"/>
+    <rdf:first rdf:resource="#Sauces"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A12">
+    <rdf:first rdf:resource="#ProcessedFoods"/>
+    <rdf:rest rdf:nodeID="A8"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Avocado">
+    <owl:disjointWith rdf:resource="#Tomato"/>
+    <owl:disjointWith rdf:resource="#Pepper"/>
+    <owl:disjointWith rdf:resource="#Chile"/>
+    <rdfs:subClassOf rdf:resource="#VegetalFruit"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A14">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:someValuesFrom rdf:resource="#Vegetals"/>
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A15">
+    <owl:someValuesFrom rdf:resource="#Mermelades"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Wholemeal">
+    <owl:disjointWith rdf:resource="#Baguette"/>
+    <owl:disjointWith rdf:resource="#Bread"/>
+    <owl:disjointWith rdf:resource="#Ciabatta"/>
+    <rdfs:subClassOf rdf:resource="#SandwichBase"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Lamb">
+    <rdfs:subClassOf rdf:resource="#Meat"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Pig"/>
+    <owl:disjointWith rdf:resource="#Veal"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A16">
+    <owl:someValuesFrom rdf:nodeID="A17"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Strawberry">
+    <rdfs:subClassOf rdf:resource="#Fruit"/>
+    <owl:disjointWith rdf:resource="#Banana"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Dressing">
+    <rdfs:subClassOf rdf:resource="#ProcessedFoods"/>
+    <owl:disjointWith rdf:resource="#Dairy"/>
+    <owl:disjointWith rdf:resource="#Mermelades"/>
+    <owl:disjointWith rdf:resource="#Sauces"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A18">
+    <owl:intersectionOf rdf:nodeID="A13"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A19">
+    <owl:unionOf rdf:nodeID="A11"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Banana">
+    <rdfs:subClassOf rdf:resource="#Fruit"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Strawberry"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#SandwichBase">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Sandwich"/>
+    <owl:disjointWith rdf:resource="#SandwichIngredients"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Bread">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Baguette"/>
+    <owl:disjointWith rdf:resource="#Ciabatta"/>
+    <owl:disjointWith rdf:resource="#Wholemeal"/>
+    <rdfs:subClassOf rdf:resource="#SandwichBase"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A20">
+    <owl:complementOf rdf:nodeID="A21"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Bird">
+    <rdfs:subClassOf rdf:resource="#Animals"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Derivatives"/>
+    <owl:disjointWith rdf:resource="#Fish"/>
+    <owl:disjointWith rdf:resource="#Meat"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#SandwichIngredients">
+    <owl:disjointWith rdf:resource="#SandwichBase"/>
+    <owl:disjointWith rdf:resource="#Sandwich"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Baguette">
+    <owl:disjointWith rdf:resource="#Bread"/>
+    <owl:disjointWith rdf:resource="#Ciabatta"/>
+    <owl:disjointWith rdf:resource="#Wholemeal"/>
+    <rdfs:subClassOf rdf:resource="#SandwichBase"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Derivatives">
+    <owl:disjointWith rdf:resource="#Fish"/>
+    <owl:disjointWith rdf:resource="#Meat"/>
+    <owl:disjointWith rdf:resource="#Bird"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="#Animals"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A22">
+    <owl:complementOf rdf:resource="#Mayonnaise"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A23">
+    <owl:someValuesFrom rdf:resource="#Derivatives"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A5">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:complementOf rdf:resource="#Mayonnaise"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Margarine">
+    <rdfs:subClassOf rdf:resource="#Dairy"/>
+    <owl:disjointWith rdf:resource="#Cheese"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Pepper">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Tomato"/>
+    <owl:disjointWith rdf:resource="#Chile"/>
+    <owl:disjointWith rdf:resource="#Avocado"/>
+    <rdfs:subClassOf rdf:resource="#VegetalFruit"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A3">
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:someValuesFrom rdf:resource="#Dairy"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Ciabatta">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="#SandwichBase"/>
+    <owl:disjointWith rdf:resource="#Baguette"/>
+    <owl:disjointWith rdf:resource="#Bread"/>
+    <owl:disjointWith rdf:resource="#Wholemeal"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#GarlicSauce">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Mayonnaise"/>
+    <owl:disjointWith rdf:resource="#Ketchup"/>
+    <rdfs:subClassOf rdf:resource="#Sauces"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A7">
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+    <owl:someValuesFrom rdf:resource="#SandwichIngredients"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#ProcessedFoods">
+    <rdfs:subClassOf rdf:resource="#SandwichIngredients"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Animals"/>
+    <owl:disjointWith rdf:resource="#Vegetals"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#VeganSandwich">
+    <rdfs:subClassOf rdf:nodeID="A24"/>
+    <rdfs:subClassOf rdf:nodeID="A15"/>
+    <rdfs:subClassOf rdf:nodeID="A25"/>
+    <rdfs:subClassOf rdf:nodeID="A26"/>
+    <rdfs:subClassOf rdf:resource="#Sandwich"/>
+    <rdfs:subClassOf rdf:nodeID="A27"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:nodeID="A28"/>
+    <rdfs:subClassOf rdf:nodeID="A14"/>
+    <rdfs:subClassOf rdf:nodeID="A16"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Mermelades">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="#ProcessedFoods"/>
+    <owl:disjointWith rdf:resource="#Dairy"/>
+    <owl:disjointWith rdf:resource="#Dressing"/>
+    <owl:disjointWith rdf:resource="#Sauces"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A29">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="A30"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Oil">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#PepperDressing"/>
+    <owl:disjointWith rdf:resource="#Curry"/>
+    <rdfs:subClassOf rdf:resource="#Dressing"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A31">
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+    <rdf:first rdf:resource="#Vegetals"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Mayonnaise">
+    <owl:disjointWith rdf:resource="#Ketchup"/>
+    <owl:disjointWith rdf:resource="#GarlicSauce"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="#Sauces"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Salmon">
+    <owl:disjointWith rdf:resource="#Tuna"/>
+    <rdfs:subClassOf rdf:resource="#Fish"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#isBaseOf">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="#SandwichBase"/>
+    <rdfs:range rdf:resource="#Sandwich"/>
+    <owl:inverseOf rdf:resource="#hasBase"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Chicken">
+    <rdfs:subClassOf rdf:resource="#Bird"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Turkey"/>
+    <owl:disjointWith rdf:resource="#Duck"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A30">
+    <rdf:first rdf:resource="#Sauces"/>
+    <rdf:rest rdf:nodeID="A32"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#StrawberryMermelade">
+    <rdfs:subClassOf rdf:resource="#Mermelades"/>
+    <owl:disjointWith rdf:resource="#PeachMermelade"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A33">
+    <rdf:rest rdf:nodeID="A34"/>
+    <rdf:first rdf:resource="#Mermelades"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A34">
+    <rdf:first rdf:nodeID="A18"/>
+    <rdf:rest rdf:nodeID="A31"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Curry">
+    <rdfs:subClassOf rdf:resource="#Dressing"/>
+    <owl:disjointWith rdf:resource="#PepperDressing"/>
+    <owl:disjointWith rdf:resource="#Oil"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Spinach">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Lettuce"/>
+    <rdfs:subClassOf rdf:resource="#Plant"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Animals">
+    <rdfs:subClassOf rdf:resource="#SandwichIngredients"/>
+    <owl:disjointWith rdf:resource="#ProcessedFoods"/>
+    <owl:disjointWith rdf:resource="#Vegetals"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A21">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:someValuesFrom rdf:resource="#Dairy"/>
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#VegetalFruit">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Plant"/>
+    <rdfs:subClassOf rdf:resource="#Vegetable"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A26">
+    <owl:someValuesFrom rdf:resource="#Mermelades"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#PepperDressing">
+    <owl:disjointWith rdf:resource="#Oil"/>
+    <owl:disjointWith rdf:resource="#Curry"/>
+    <rdfs:subClassOf rdf:resource="#Dressing"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Turkey">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Duck"/>
+    <owl:disjointWith rdf:resource="#Chicken"/>
+    <rdfs:subClassOf rdf:resource="#Bird"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Egg">
+    <rdfs:subClassOf rdf:resource="#Derivatives"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Honey"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A32">
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+    <rdf:first rdf:nodeID="A22"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A28">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:someValuesFrom rdf:nodeID="A29"/>
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#hasBase">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <owl:inverseOf rdf:resource="#isBaseOf"/>
+    <rdfs:domain rdf:resource="#Sandwich"/>
+    <rdfs:range rdf:resource="#SandwichBase"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A35">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:someValuesFrom rdf:resource="#Vegetals"/>
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A36">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+    <owl:someValuesFrom rdf:resource="#ProcessedFoods"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A37">
+    <rdf:first rdf:resource="#Dressing"/>
+    <rdf:rest rdf:nodeID="A33"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#NonLactoseIntolerantSandwich">
+    <owl:disjointWith rdf:resource="#LactoseIntolerantSandwich"/>
+    <rdfs:subClassOf rdf:nodeID="A20"/>
+    <rdfs:subClassOf rdf:resource="#Sandwich"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A10">
+    <owl:complementOf rdf:resource="#Mayonnaise"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Fish">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Derivatives"/>
+    <owl:disjointWith rdf:resource="#Meat"/>
+    <owl:disjointWith rdf:resource="#Bird"/>
+    <rdfs:subClassOf rdf:resource="#Animals"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#VegetarianSandwich">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#CarnivorousSandwich"/>
+    <rdfs:subClassOf rdf:nodeID="A38"/>
+    <rdfs:subClassOf rdf:nodeID="A23"/>
+    <rdfs:subClassOf rdf:nodeID="A0"/>
+    <rdfs:subClassOf rdf:nodeID="A9"/>
+    <rdfs:subClassOf rdf:nodeID="A35"/>
+    <rdfs:subClassOf rdf:nodeID="A36"/>
+    <rdfs:subClassOf rdf:resource="#Sandwich"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Honey">
+    <rdfs:subClassOf rdf:resource="#Derivatives"/>
+    <owl:disjointWith rdf:resource="#Egg"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A24">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:someValuesFrom rdf:resource="#Dressing"/>
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Vegetals">
+    <rdfs:subClassOf rdf:resource="#SandwichIngredients"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Animals"/>
+    <owl:disjointWith rdf:resource="#ProcessedFoods"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Tomato">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="#VegetalFruit"/>
+    <owl:disjointWith rdf:resource="#Pepper"/>
+    <owl:disjointWith rdf:resource="#Chile"/>
+    <owl:disjointWith rdf:resource="#Avocado"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A25">
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:someValuesFrom rdf:resource="#Dressing"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Meat">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:disjointWith rdf:resource="#Derivatives"/>
+    <owl:disjointWith rdf:resource="#Fish"/>
+    <owl:disjointWith rdf:resource="#Bird"/>
+    <rdfs:subClassOf rdf:resource="#Animals"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A27">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+    <owl:allValuesFrom rdf:nodeID="A39"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A39">
+    <owl:unionOf rdf:nodeID="A37"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#Dairy">
+    <rdfs:subClassOf rdf:resource="#ProcessedFoods"/>
+    <owl:disjointWith rdf:resource="#Dressing"/>
+    <owl:disjointWith rdf:resource="#Mermelades"/>
+    <owl:disjointWith rdf:resource="#Sauces"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A38">
+    <owl:allValuesFrom rdf:nodeID="A19"/>
+    <owl:onProperty rdf:resource="#hasIngredient"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A17">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="A1"/>
+  </rdf:Description>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.3.1, Build 430)  http://protege.stanford.edu -->
