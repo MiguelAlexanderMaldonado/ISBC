@@ -202,7 +202,7 @@ public class SandwichOntology {
 										
 				if(dialogResult2 == JOptionPane.YES_OPTION ) {
 					
-					if(!isTpeSandwichAdded) {
+					if(!isTpeSandwichAdded && positiveRestrictions.size()<5) {
 					
 						positiveRestrictions.add(concept);
 						addRestrictions();
