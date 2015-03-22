@@ -202,14 +202,15 @@ public class SandwichOntology {
 										
 				if(dialogResult2 == JOptionPane.YES_OPTION ) {
 					
-					if(!isTpeSandwichAdded && positiveRestrictions.size()<5) {
+					if(!isTpeSandwichAdded && positiveRestrictions.size()<5 && !negativeRestrictions.contains(concept)) {
 					
 						positiveRestrictions.add(concept);
 						addRestrictions();
 						
 					}else {
 						
-						JOptionPane.showMessageDialog(null, "No se pueden añadir más");		
+						if(negativeRestrictions.contains(concept)) JOptionPane.showMessageDialog(null, "No se pueden añadir");
+						else JOptionPane.showMessageDialog(null, "No se pueden añadir más");		
 						
 					}
 					
@@ -218,7 +219,7 @@ public class SandwichOntology {
 					
 				}else {
 					
-					if(negativeRestrictions.size()<2) {
+					if(negativeRestrictions.size()<2 && !positiveRestrictions.contains(concept)) {
 					
 						if(!OntologyUsefulFunctions.getSuperClass(concept).equals("Sandwich")) {
 						
@@ -227,7 +228,10 @@ public class SandwichOntology {
 													
 						}else JOptionPane.showMessageDialog(null, "No se puede añadir, tipo no válido");							
 						
-					}else JOptionPane.showMessageDialog(null, "No se pueden añadir más");					
+					}else {
+						if(positiveRestrictions.contains(concept)) JOptionPane.showMessageDialog(null, "No se pueden añadir");
+						else JOptionPane.showMessageDialog(null, "No se pueden añadir más");					
+					}
 					
 				}	
 				
