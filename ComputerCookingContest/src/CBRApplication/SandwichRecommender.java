@@ -458,12 +458,12 @@ public class SandwichRecommender {
 					
 		ArrayList<CBRCase> cases =	CasesFilter(querys,_caseBase.getCases());
 		
+		_frame.getTextArea().append("____________________________________" + "\n"); 
+		
 		for(CBRCase _case : cases) {				
 				//System.out.println(_case);
 			SandwichDescription description = new SandwichDescription();
-			
-			_frame.getTextArea().append("____________________________________" + "\n"); 
-			
+						
 			if(_case.getDescription() instanceof JointSandwichDescription){
 				
 				JointSandwichDescription _description = (JointSandwichDescription)_case.getDescription();
