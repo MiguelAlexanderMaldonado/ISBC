@@ -93,7 +93,7 @@ public class PnlConceptsTree extends JPanel  implements TreeSelectionListener{
 		//set border and layout
 		emptyBorder = BorderFactory.createEmptyBorder(0, 5, 0, 5);
 		lineBorder = BorderFactory.createLineBorder(Color.BLACK);
-		titleBorder = BorderFactory.createTitledBorder(lineBorder, "Ontology Structure");
+		titleBorder = BorderFactory.createTitledBorder(lineBorder, "Ontología");
 		compoundBorder = BorderFactory.createCompoundBorder(titleBorder,
 				emptyBorder);
 		setBorder(compoundBorder);

@@ -179,6 +179,37 @@ public class SandwichOntology {
 		
 	}
 	
+	/***
+	 * Compruba si el Array de restricciones contiene el ingrediente concepto o alguno de sus hijos.
+	 * @param restrictions
+	 * @param concept
+	 * @return
+	 */
+	private static boolean contains(ArrayList<String> restrictions, String concept){
+		boolean contain = false;
+		if(restrictions.size()>0){
+			// Si el ingrediente concept es hoja (no tiene hijos)
+			if(OntologyUsefulFunctions.isLastChild(concept)) {
+				
+				contain =  restrictions.contains(concept);
+				
+			}else{
+						
+				ArrayList<String> childs = OntologyUsefulFunctions.getLastChilds(concept);			
+				int i =0;
+				
+				while(i < childs.size() && !contain){
+					
+					contain = restrictions.contains(childs.get(i));
+					i++;
+				}
+				
+			}	
+		}
+		return contain;
+	}
+	
+	
 	/**
 	 * Añade a los arrays de restricciones y al panel de restricciones
 	 * el elemento seleccionado en el árbol.
@@ -186,70 +217,93 @@ public class SandwichOntology {
 	 */
 	public static void getSelectedConcept(String concept) {
 		
-		int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea añadirla?","",JOptionPane.YES_NO_OPTION);
-	
+		int dialogResult = -1;
+		
 		concept = StringEvaluator.getLastWord(treeRestrictions.getSelectedConcept(),", ");
 		
-		if(positiveRestrictions.size()<1)
-			isTpeSandwichAdded = false;
-		
-		
 		if(!concept.equals("SandwichIngredients") && !concept.equals("Sandwich") && !concept.equals("SandwichBase")) {
+			
+			if(OntologyUsefulFunctions.getSuperClass(concept).equals("Sandwich"))
+				dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea añadir el tipo de sándwich?","",JOptionPane.YES_NO_OPTION);
+			else
+				dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea que el sándwich contenga ese ingrediente?","",JOptionPane.YES_NO_OPTION);						
 				
 			if(dialogResult == JOptionPane.YES_OPTION) {
+						
+				if(positiveRestrictions.size()<2 && !negativeRestrictions.contains(concept) && !positiveRestrictions.contains(concept) &&
+					!contains(negativeRestrictions,concept) && !contains(positiveRestrictions,concept)) {
 				
-				int dialogResult2 = JOptionPane.showConfirmDialog (null, "¿Desea que el sándwich contenga esa restricción?","",JOptionPane.YES_NO_OPTION);
-										
-				if(dialogResult2 == JOptionPane.YES_OPTION ) {
-					
-					if(!isTpeSandwichAdded && positiveRestrictions.size()<5 && !negativeRestrictions.contains(concept)) {
-					
+					if(OntologyUsefulFunctions.getSuperClass(concept).equals("SandwichBase") && 
+					!contains(positiveRestrictions,"SandwichBase"))	{	
+						
 						positiveRestrictions.add(concept);
 						addRestrictions();
 						
-					}else {
+					}
+					else if(OntologyUsefulFunctions.getSuperClass(concept).equals("Sandwich")){
 						
-						if(negativeRestrictions.contains(concept)) JOptionPane.showMessageDialog(null, "No se pueden añadir");
-						else JOptionPane.showMessageDialog(null, "No se pueden añadir más");		
+						positiveRestrictions.add(concept);
+						addRestrictions();
 						
 					}
-					
-					if(OntologyUsefulFunctions.getSuperClass(concept).equals("Sandwich"))
-						isTpeSandwichAdded = true;					
+					else if(!OntologyUsefulFunctions.getSuperClass(concept).equals("SandwichBase")){
+						
+						positiveRestrictions.add(concept);
+						addRestrictions();
+						
+					} else JOptionPane.showMessageDialog(null, "No se pueden añadir más");
 					
 				}else {
 					
-					if(negativeRestrictions.size()<2 && !positiveRestrictions.contains(concept)) {
-					
-						if(!OntologyUsefulFunctions.getSuperClass(concept).equals("Sandwich")) {
-						
-							negativeRestrictions.add(concept);
-							addRestrictions();
-													
-						}else JOptionPane.showMessageDialog(null, "No se puede añadir, tipo no válido");							
-						
-					}else {
-						if(positiveRestrictions.contains(concept)) JOptionPane.showMessageDialog(null, "No se pueden añadir");
-						else JOptionPane.showMessageDialog(null, "No se pueden añadir más");					
-					}
-					
-				}	
-				
-				if(isTpeSandwichAdded) {
-					
-					if(positiveRestrictions.size()>1) {
-						
-						positiveRestrictions.clear();
-						positiveRestrictions.add(concept);
-						addRestrictions();
-						
-					}
+					if(contains(negativeRestrictions,concept)) JOptionPane.showMessageDialog(null, "No se puede añadir");
+					else JOptionPane.showMessageDialog(null, "No se pueden añadir más");		
 					
 				}
 				
-			}				
+				if(OntologyUsefulFunctions.getSuperClass(concept).equals("Sandwich"))
+					isTpeSandwichAdded = true;					
+				
+			}else {
+				
+				if(negativeRestrictions.size()<2 &&  !negativeRestrictions.contains(concept) && !positiveRestrictions.contains(concept) &&
+					!contains(positiveRestrictions,concept) && !contains(negativeRestrictions,concept)) {
+				
+					if(!OntologyUsefulFunctions.getSuperClass(concept).equals("Sandwich")) {
+						
+						if(OntologyUsefulFunctions.getSuperClass(concept).equals("SandwichBase") && 
+								!contains(positiveRestrictions,"SandwichBase") && !contains(negativeRestrictions,"SandwichBase")){
+							negativeRestrictions.add(concept);
+							addRestrictions();
+						}
+						else if(!OntologyUsefulFunctions.getSuperClass(concept).equals("SandwichBase"))
+						{	
+							negativeRestrictions.add(concept);
+							addRestrictions();
+						}else JOptionPane.showMessageDialog(null, "No se pueden añadir más");	
+						
+					}else JOptionPane.showMessageDialog(null, "No se puede añadir, tipo no válido");							
+					
+				}else {
+					if(contains(positiveRestrictions,concept)) JOptionPane.showMessageDialog(null, "No se puede añadir de esta forma puesto que es un tipo de sándwich");
+					else JOptionPane.showMessageDialog(null, "No se pueden añadir más");					
+				}
+				
+			}	
 			
-		} else JOptionPane.showMessageDialog(null, "No se puede añadir, tipo no válido");	
+			if(isTpeSandwichAdded) {
+				
+				if(positiveRestrictions.size()>1) {
+					
+					positiveRestrictions.clear();
+					positiveRestrictions.add(concept);
+					addRestrictions();
+					
+				}
+				
+			}			
+			
+		} else if (concept.equals("SandwichIngredients") ) JOptionPane.showMessageDialog(null, "No se puede añadir como ");	
+		else JOptionPane.showMessageDialog(null, "No se puede añadir, tipo no válido");	
 		
 	}
 

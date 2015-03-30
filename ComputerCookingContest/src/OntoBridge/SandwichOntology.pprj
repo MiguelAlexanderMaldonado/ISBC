@@ -1,4 +1,4 @@
-; Sun Mar 22 17:58:32 CET 2015
+; Mon Mar 30 18:54:30 CEST 2015
 ; 
 ;+ (version "3.3.1")
 ;+ (build "Build 430")
@@ -6,11 +6,11 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[SandwichOntology_ProjectKB_Instance_70]
-		[SandwichOntology_ProjectKB_Instance_71]
-		[SandwichOntology_ProjectKB_Instance_72]
-		[SandwichOntology_ProjectKB_Instance_73]
-		[SandwichOntology_ProjectKB_Instance_74]))
+		[SandwichOntology_ProjectKB_Instance_65]
+		[SandwichOntology_ProjectKB_Instance_66]
+		[SandwichOntology_ProjectKB_Instance_67]
+		[SandwichOntology_ProjectKB_Instance_68]
+		[SandwichOntology_ProjectKB_Instance_69]))
 
 ([CLSES_TAB] of  Widget
 
@@ -6931,12 +6931,12 @@
 	(customized_instance_widgets
 		[PAL_FORM_WIDGET]
 		[KB_713803_Instance_477]
-		[INSTANCE_ANNOTATION_FORM_WIDGET]
 		[KB_713803_Instance_780]
-		[KB_301165_Instance_856]
+		[INSTANCE_ANNOTATION_FORM_WIDGET]
 		[KB_713803_Instance_693]
-		[KB_691299_Instance_537]
+		[KB_301165_Instance_856]
 		[KB_713803_Instance_648]
+		[KB_691299_Instance_537]
 		[KB_691299_Instance_398]
 		[KB_303942_Instance_68]
 		[KB_938545_Instance_166]
@@ -7023,17 +7023,17 @@
 		":SYSTEM-CLASS"
 		"owl:oneOf"
 		"owl:DataRange"
-		"owl:DeprecatedProperty"
 		"rdf:Property"
-		"owl:DeprecatedClass"
+		"owl:DeprecatedProperty"
 		"owl:Class"
+		"owl:DeprecatedClass"
 		"rdf:Statement"
 		"rdf:type"
-		"rdf:subject"
 		"rdfs:Class"
+		"rdf:subject"
 		"rdf:predicate"
-		"rdf:object"
 		":OWL-ANONYMOUS-ROOT"
+		"rdf:object"
 		"rdfs:Container"
 		"owl:AllDifferent"
 		"owl:distinctMembers"
@@ -7284,33 +7284,33 @@
 	(property_list [SandwichOntology_ProjectKB_Instance_7])
 	(widget_class_name "edu.stanford.smi.protegex.server_changes.prompt.UsersTab"))
 
-([SandwichOntology_ProjectKB_Instance_7] of  Property_List
-)
-
-([SandwichOntology_ProjectKB_Instance_70] of  String
+([SandwichOntology_ProjectKB_Instance_65] of  String
 
 	(name "owl:Thing")
 	(string_value "%3ANAME"))
 
-([SandwichOntology_ProjectKB_Instance_71] of  String
+([SandwichOntology_ProjectKB_Instance_66] of  String
 
 	(name ":PAL-CONSTRAINT")
 	(string_value "%3APAL-NAME"))
 
-([SandwichOntology_ProjectKB_Instance_72] of  String
+([SandwichOntology_ProjectKB_Instance_67] of  String
 
 	(name ":INSTANCE-ANNOTATION")
 	(string_value "%3AANNOTATION-TEXT"))
 
-([SandwichOntology_ProjectKB_Instance_73] of  String
+([SandwichOntology_ProjectKB_Instance_68] of  String
 
 	(name ":META-CLASS")
 	(string_value "%3ANAME"))
 
-([SandwichOntology_ProjectKB_Instance_74] of  String
+([SandwichOntology_ProjectKB_Instance_69] of  String
 
 	(name "owl:Class")
 	(string_value "%3ANAME"))
+
+([SandwichOntology_ProjectKB_Instance_7] of  Property_List
+)
 
 ([SandwichOntology_ProjectKB_Instance_8] of  Widget
 

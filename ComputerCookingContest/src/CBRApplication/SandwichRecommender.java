@@ -39,7 +39,7 @@ public class SandwichRecommender {
 	private static SandwichOntology _sandwichOntology;
 	private static SandwichRecommender srApp = null;
 	private ArrayList<ArrayList<String>> finalSandwichs = new ArrayList<ArrayList<String>>();
-    private int k = 5;	//Número de casos que se devuelven como resultado
+    public static int k = 5;	//Número de casos que se devuelven como resultado
 
 	
 	public void configure() throws ExecutionException{
@@ -113,6 +113,9 @@ public class SandwichRecommender {
 							@Override
 							public void actionPerformed(ActionEvent arg0){
 								// TODO Auto-generated method stub
+								// Se limpia el registro de casos
+								_cases.clear();
+								
 								_frame.getTextArea().setText(null);
 								
 								if(_frame.getTextArea().getRows()==0)
@@ -218,124 +221,96 @@ public class SandwichRecommender {
 	 * Filtra los sándwiches con las restricciones negativas.
 	 * @param sandwichs
 	 */
-	private void negativeRestrictionsFilter(ArrayList<ArrayList<String>> sandwichs) {
+	private String negativeRestrictionsFilter(String sandwich) {
 		
 		ArrayList<String> negativeRestrictions = _sandwichOntology.getNegativeRestrictions();
+		String _sandwich = sandwich;	
 		
 		int index = 0;
 		
 		while(index < negativeRestrictions.size()) {
-			
-			for(int i=0; i<sandwichs.size(); i++) {
-			
-				//Si la restricción no es una hoja 
-				if(!OntologyUsefulFunctions.isLastChild(negativeRestrictions.get(index))) { 
+						
+			//Si la restricción no es una hoja 
+			if(!OntologyUsefulFunctions.isLastChild(negativeRestrictions.get(index))) { 
+				
+				//Ingredientes hoja de la restricción
+				ArrayList<String> childsNegativeRestrictions = OntologyUsefulFunctions.getLastChilds(negativeRestrictions.get(index));
+				//Hermanos de la restricción
+				ArrayList<String> brothers = OntologyUsefulFunctions.getBrothers(negativeRestrictions.get(index));
+				
+				int m = 0;
+				
+				while(m<negativeRestrictions.size() && brothers.contains(negativeRestrictions.get(m))){
 					
-					//Ingredientes hoja de la restricción
-					ArrayList<String> childsNegativeRestrictions = OntologyUsefulFunctions.getLastChilds(negativeRestrictions.get(index));
-					//Hermanos de la restricción
-					ArrayList<String> brothers = OntologyUsefulFunctions.getBrothers(negativeRestrictions.get(index));
-					
-					if(brothers.contains(negativeRestrictions.get(index))){
-						
-						brothers.remove(brothers.indexOf(negativeRestrictions.get(index)));
-						
-					}
-					
-					//Compruebo que no se haya filtrado ya por un hermano de la actual restricción
-					for(int p=0; p<negativeRestrictions.size(); p++) {
-						
-						if(brothers.contains(negativeRestrictions.get(p)))
-							brothers.remove(brothers.indexOf(negativeRestrictions.get(p)));
-						
-					}					
-					
-					//Hojas de los hermanos de la restricción
-					ArrayList<String> childsOfBrothers = new ArrayList<String>();
-					
-					for(int j=0; j<brothers.size(); j++) {
-						
-						childsOfBrothers.addAll(OntologyUsefulFunctions.getLastChilds(brothers.get(j)));
-						
-					}
-					
-					Random r = new Random();								
-					int k = 0;
-					boolean replaced = false;
-					
-					//Se reemplaza el ingrediente del sandwich que cumple la restricción
-					//con un ingrediente hoja de los hermanos de la restricción
-					while (!replaced && k<childsNegativeRestrictions.size()) {
-						
-						int l=0;
-
-						while( l<sandwichs.get(i).size()) {
-							
-							if(sandwichs.get(i).get(l).contains(childsNegativeRestrictions.get(k))) {
-								
-								String sandwich = "";								
-								sandwich = sandwichs.get(i).get(l).replace(childsNegativeRestrictions.get(k), childsOfBrothers.get(r.nextInt(childsOfBrothers.size()))); 
-								
-								finalSandwichs.get(i).set(l, sandwich);
-								
-							}						
-						
-							l++;
-						}
-						
-						k++;
-						
-					}					
-					
-				} else {
-					
-					//Ingredientes hoja de la restricción
-					ArrayList<String> childsNegativeRestrictions = OntologyUsefulFunctions.getLastChilds(OntologyUsefulFunctions.getSuperClass(negativeRestrictions.get(index)));
-					childsNegativeRestrictions.remove(negativeRestrictions.get(index));
-					
-					//Compruebo que no se haya filtrado ya por un hermano de la actual restricción
-					for(int p=0; p<negativeRestrictions.size(); p++) {
-						
-						if(childsNegativeRestrictions.contains(negativeRestrictions.get(p)))
-							childsNegativeRestrictions.remove(childsNegativeRestrictions.indexOf(negativeRestrictions.get(p)));
-						
-					}	
-					
-					Random r = new Random();	
-					int k = 0;
-					boolean replaced = false;
-					
-					//Se reemplaza el ingrediente del sandwich que cumple la restricción
-					//con un ingrediente hoja de los hermanos de la restricción
-					while (!replaced && k<negativeRestrictions.size()) {
-						
-						int l=0;
-
-						while( l<sandwichs.get(i).size()) {
-							
-							if(sandwichs.get(i).get(l).contains(negativeRestrictions.get(k))) {
-								
-								String sandwich = "";								
-								sandwich = sandwichs.get(i).get(l).replace(negativeRestrictions.get(k), childsNegativeRestrictions.get(r.nextInt(childsNegativeRestrictions.size()))); 
-								
-								finalSandwichs.get(i).set(l, sandwich);
-								
-							}						
-						
-							l++;
-						}
-						
-						k++;
-						
-					}			
+					brothers.remove(brothers.indexOf(negativeRestrictions.get(m)));
+					m++;
 					
 				}
-			
+				
+				//Compruebo que no se haya filtrado ya por un hermano de la actual restricción
+				for(int p=0; p<negativeRestrictions.size(); p++) {
+					
+					if(brothers.contains(negativeRestrictions.get(p)))
+						brothers.remove(brothers.indexOf(negativeRestrictions.get(p)));
+					
+				}					
+				
+				//Hojas de los hermanos de la restricción
+				ArrayList<String> childsOfBrothers = new ArrayList<String>();
+				
+				for(int j=0; j<brothers.size(); j++) {
+					
+					childsOfBrothers.addAll(OntologyUsefulFunctions.getLastChilds(brothers.get(j)));
+					
+				}
+				
+				Random r = new Random();								
+				int k = 0;
+				
+				//Se reemplaza el ingrediente del sandwich que cumple la restricción
+				//con un ingrediente hoja de los hermanos de la restricción
+				while(k < childsNegativeRestrictions.size()){
+					
+					if(sandwich.contains(childsNegativeRestrictions.get(k))) {
+						
+						_sandwich = _sandwich.replace(childsNegativeRestrictions.get(k), childsOfBrothers.get(r.nextInt(childsOfBrothers.size()))); 
+					
+					}	
+					k++;
+				}
+				
+			} else {
+				
+				//Ingredientes hoja de la restricción
+				ArrayList<String> childsNegativeRestrictions = OntologyUsefulFunctions.getLastChilds(OntologyUsefulFunctions.getSuperClass(negativeRestrictions.get(index)));
+				childsNegativeRestrictions.remove(negativeRestrictions.get(index));
+				
+				//Compruebo que no se haya filtrado ya por un hermano de la actual restricción
+				for(int p=0; p<negativeRestrictions.size(); p++) {
+					
+					if(childsNegativeRestrictions.contains(negativeRestrictions.get(p)))
+						childsNegativeRestrictions.remove(childsNegativeRestrictions.indexOf(negativeRestrictions.get(p)));
+					
+				}	
+				
+				Random r = new Random();	
+				int k = 0;
+				//Se reemplaza el ingrediente del sandwich que cumple la restricción
+				//con un ingrediente hoja de los hermanos de la restricción
+				while(k < negativeRestrictions.size()){
+					if(sandwich.contains(negativeRestrictions.get(k))) {
+													
+						_sandwich = _sandwich.replace(negativeRestrictions.get(k), childsNegativeRestrictions.get(r.nextInt(childsNegativeRestrictions.size()))); 
+
+					}
+					k++;
+				}
+				
 			}
-			
 			index++;
-			sandwichs = finalSandwichs;
 		}		
+		
+		return _sandwich;
 		
 	}
 	
@@ -361,43 +336,50 @@ public class SandwichRecommender {
         Collection <RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(getFormatedCases(cases),query,simConfig);
 
         // Se seleccionan los k casos de la recuperación
-        eval = SelectCases.selectTopKRR(eval, k);
-        
-        Iterator<RetrievalResult> _iterator =  eval.iterator();        
-        RetrievalResult _rr;
+        eval = SelectCases.selectTopKRR(eval, k);      
         
         //Se limpia el array de resultados
         finalSandwichs.clear();
-        
-        while(_iterator.hasNext()) {
-        	
-        	_rr = _iterator.next();
-        	JointSandwichDescription _jd = (JointSandwichDescription) _rr.get_case().getDescription();
-        	finalSandwichs.add(_jd.getIngredients());
-        }	
         	
         //Filtrado por restricciones negativas
-    	if(_sandwichOntology.getNegativeRestrictions().size() > 0) {
+    	if(_sandwichOntology.getNegativeRestrictions().size() > 0 && _cases.size() > 0) {
     		
-    		negativeRestrictionsFilter(finalSandwichs);
+    		ArrayList<String> _casesAux = new ArrayList<String>();
+    		_casesAux.addAll(_cases);
+    		_cases.clear();
     		
-    	}   	
-    	
-    	_frame.getTextArea().append("____________________________________" + "\n");
-    	 
-    	for(int i=0; i<finalSandwichs.size(); i++) {
+    		for(int i =0; i<_casesAux.size(); i++){
     		
-    		for(int j=0; j<finalSandwichs.get(i).size(); j++) {
-    			
-    			_frame.getTextArea().append(finalSandwichs.get(i).get(j).toString() + " ");	
-    			
+				_cases.add(negativeRestrictionsFilter(_casesAux.get(i)));
+    		
     		}
-    		_frame.getTextArea().append("\n");
-    		_frame.getTextArea().append("____________________________________" + "\n"); 
-    	}
-        	      	
-//        	_frame.getTextArea().append( _rr.getEval() + "\n");  	                     
-
+    		
+    	}   
+    	
+    	_frame.getTextArea().append("_____________________________________________" + "\n");
+   	 
+    	if(_cases.size() > 0)
+	    	for(int i=0; i<k; i++) {   			
+				_frame.getTextArea().append(_cases.get(i).toString() + " ");
+//	    		_frame.getTextArea().append(evals.get(i).toString());
+	    		_frame.getTextArea().append("\n");
+	    		_frame.getTextArea().append("_____________________________________________" + "\n"); 
+	    	}  	                     
+    	
+	}
+	
+	private static ArrayList<String> _cases = new ArrayList<String>();
+	
+	public static void recordCase(String _case){
+		
+		_cases.add(_case);
+		
+	}
+	
+	public static int getNumOfRecordCase(){
+		
+		return _cases.size();
+		
 	}
 	
 	//-------------------------------------------------------------------------------------------
