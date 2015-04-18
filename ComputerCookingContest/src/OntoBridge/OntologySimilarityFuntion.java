@@ -64,8 +64,38 @@ public class OntologySimilarityFuntion implements LocalSimilarityFunction {
             String superClass = SandwichOntology.getOntoBridge().listSuperClasses(ingK, true).next();
             superClass = superClass.substring(superClass.indexOf("#")+1);
             
+            if(superClass.equals("SandwichBase")) {
+            	
+            	exists = ingredientsCase.contains(ingK);
+            	
+            	if(!exists) {
+            		
+            		exists = false;
+            		
+            		ArrayList<String> brothersK = OntologyUsefulFunctions.getBrothers(ingK);
+                    brothersK.remove(ingK);
+            		
+                	int i = 0;
+                    
+                    while (i < brothersK.size() && !exists) {
+                        
+                        exists = ingredientsCase.contains(brothersK.get(i));  
+                        i++;
+                    }
+                    i--;
+                    
+                    if(exists) {
+                    	
+                    	 // Si se ha encontrado algún hermano, se suma el coste                                    
+                        computo += inc;
+                        ingredientsCase = ingredientsCase.replace(brothersK.get(i), ingK);
+                    	
+                    }
+                    
+            	}
+            	
             // Verifica si es un tipo de sandwich
-            if(superClass.equals("Sandwich")) { 
+            }else if(superClass.equals("Sandwich")) { 
             	
             	sandwichTypeVerification(ingK, ingredientsCase);
             
@@ -89,7 +119,7 @@ public class OntologySimilarityFuntion implements LocalSimilarityFunction {
                     	// Si es el último ingrediente implica que la sustitución puede eliminar algún
                     	// ingrediente hermano del caso que se encuentra en la consulta, por lo tanto,
                     	// se añade este ingrediente como uno más al caso.
-                    	if(k+1 == querySize) {
+                    	if(k+1 == querySize && !superClass.equals("SandwichBase")) {
                     		 computo += inc;
                     		ingredientsCase = ingredientsCase +" "+ ingK;
                     	}else{
