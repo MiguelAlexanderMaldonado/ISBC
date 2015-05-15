@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
+import org.apache.commons.logging.LogFactory;
+
 import OntoBridge.OntologyUsefulFunctions;
 import OntoBridge.SandwichOntology;
 import OntoBridge.OntologySimilarityFuntion;
@@ -147,7 +149,7 @@ public class SandwichRecommender {
 
 			});
 		}catch(Exception e){
-			org.apache.commons.logging.LogFactory.getLog(SandwichRecommender.class).error(e);
+			LogFactory.getLog(SandwichRecommender.class).error(e);
 		}
 		
 	}
