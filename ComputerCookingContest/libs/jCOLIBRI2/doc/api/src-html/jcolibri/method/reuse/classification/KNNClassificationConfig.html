@@ -1,0 +1,118 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    package jcolibri.method.reuse.classification;<a name="line.1"></a>
+<FONT color="green">002</FONT>    <a name="line.2"></a>
+<FONT color="green">003</FONT>    import jcolibri.method.retrieve.NNretrieval.NNConfig;<a name="line.3"></a>
+<FONT color="green">004</FONT>    <a name="line.4"></a>
+<FONT color="green">005</FONT>    /**<a name="line.5"></a>
+<FONT color="green">006</FONT>     * This class stores the configuration for the KNN classification methods.<a name="line.6"></a>
+<FONT color="green">007</FONT>     * @author Lisa Cummins<a name="line.7"></a>
+<FONT color="green">008</FONT>     */<a name="line.8"></a>
+<FONT color="green">009</FONT>    public class KNNClassificationConfig extends NNConfig {<a name="line.9"></a>
+<FONT color="green">010</FONT>    <a name="line.10"></a>
+<FONT color="green">011</FONT>            /**<a name="line.11"></a>
+<FONT color="green">012</FONT>             * The type of classification method being used by this<a name="line.12"></a>
+<FONT color="green">013</FONT>             * config object.<a name="line.13"></a>
+<FONT color="green">014</FONT>             */<a name="line.14"></a>
+<FONT color="green">015</FONT>            KNNClassificationMethod classificationMethod;<a name="line.15"></a>
+<FONT color="green">016</FONT>    <a name="line.16"></a>
+<FONT color="green">017</FONT>            /**<a name="line.17"></a>
+<FONT color="green">018</FONT>             * Returns the classification method stored in this<a name="line.18"></a>
+<FONT color="green">019</FONT>             * config object.<a name="line.19"></a>
+<FONT color="green">020</FONT>             * @return the classification method stored in this<a name="line.20"></a>
+<FONT color="green">021</FONT>             * config object.<a name="line.21"></a>
+<FONT color="green">022</FONT>             */<a name="line.22"></a>
+<FONT color="green">023</FONT>            public KNNClassificationMethod getClassificationMethod()<a name="line.23"></a>
+<FONT color="green">024</FONT>            {       return classificationMethod;<a name="line.24"></a>
+<FONT color="green">025</FONT>            }<a name="line.25"></a>
+<FONT color="green">026</FONT>    <a name="line.26"></a>
+<FONT color="green">027</FONT>            /**<a name="line.27"></a>
+<FONT color="green">028</FONT>             * Sets the classification method for this<a name="line.28"></a>
+<FONT color="green">029</FONT>             * config object to be classificationMethod.<a name="line.29"></a>
+<FONT color="green">030</FONT>             * @param classificationMethod the classification<a name="line.30"></a>
+<FONT color="green">031</FONT>             * method to be used for this config object.<a name="line.31"></a>
+<FONT color="green">032</FONT>             */<a name="line.32"></a>
+<FONT color="green">033</FONT>            public void setClassificationMethod(KNNClassificationMethod classificationMethod)<a name="line.33"></a>
+<FONT color="green">034</FONT>            {       this.classificationMethod = classificationMethod;<a name="line.34"></a>
+<FONT color="green">035</FONT>            }<a name="line.35"></a>
+<FONT color="green">036</FONT>            <a name="line.36"></a>
+<FONT color="green">037</FONT>            private int K = Integer.MAX_VALUE;<a name="line.37"></a>
+<FONT color="green">038</FONT>            <a name="line.38"></a>
+<FONT color="green">039</FONT>            /**<a name="line.39"></a>
+<FONT color="green">040</FONT>             * @return Returns the k.<a name="line.40"></a>
+<FONT color="green">041</FONT>             */<a name="line.41"></a>
+<FONT color="green">042</FONT>            public int getK() {<a name="line.42"></a>
+<FONT color="green">043</FONT>                    return K;<a name="line.43"></a>
+<FONT color="green">044</FONT>            }<a name="line.44"></a>
+<FONT color="green">045</FONT>    <a name="line.45"></a>
+<FONT color="green">046</FONT>            /**<a name="line.46"></a>
+<FONT color="green">047</FONT>             * @param k The k to set.<a name="line.47"></a>
+<FONT color="green">048</FONT>             */<a name="line.48"></a>
+<FONT color="green">049</FONT>            public void setK(int k) {<a name="line.49"></a>
+<FONT color="green">050</FONT>                    K = k;<a name="line.50"></a>
+<FONT color="green">051</FONT>            }<a name="line.51"></a>
+<FONT color="green">052</FONT>    }<a name="line.52"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

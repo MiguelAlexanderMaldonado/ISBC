@@ -1,0 +1,181 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    /**<a name="line.1"></a>
+<FONT color="green">002</FONT>     * GreedySelection.java<a name="line.2"></a>
+<FONT color="green">003</FONT>     * jCOLIBRI2 framework. <a name="line.3"></a>
+<FONT color="green">004</FONT>     * @author Juan A. Recio-García.<a name="line.4"></a>
+<FONT color="green">005</FONT>     * GAIA - Group for Artificial Intelligence Applications<a name="line.5"></a>
+<FONT color="green">006</FONT>     * http://gaia.fdi.ucm.es<a name="line.6"></a>
+<FONT color="green">007</FONT>     * 05/11/2007<a name="line.7"></a>
+<FONT color="green">008</FONT>     */<a name="line.8"></a>
+<FONT color="green">009</FONT>    package jcolibri.method.retrieve.selection.diversity;<a name="line.9"></a>
+<FONT color="green">010</FONT>    <a name="line.10"></a>
+<FONT color="green">011</FONT>    import java.util.ArrayList;<a name="line.11"></a>
+<FONT color="green">012</FONT>    import java.util.Collection;<a name="line.12"></a>
+<FONT color="green">013</FONT>    <a name="line.13"></a>
+<FONT color="green">014</FONT>    import jcolibri.cbrcore.CBRCase;<a name="line.14"></a>
+<FONT color="green">015</FONT>    import jcolibri.cbrcore.CBRQuery;<a name="line.15"></a>
+<FONT color="green">016</FONT>    import jcolibri.method.retrieve.RetrievalResult;<a name="line.16"></a>
+<FONT color="green">017</FONT>    import jcolibri.method.retrieve.NNretrieval.NNConfig;<a name="line.17"></a>
+<FONT color="green">018</FONT>    import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;<a name="line.18"></a>
+<FONT color="green">019</FONT>    import jcolibri.method.retrieve.selection.SelectCases;<a name="line.19"></a>
+<FONT color="green">020</FONT>    <a name="line.20"></a>
+<FONT color="green">021</FONT>    /**<a name="line.21"></a>
+<FONT color="green">022</FONT>     * This method incrementally builds a retrieval set, R. During each step the<a name="line.22"></a>
+<FONT color="green">023</FONT>     * remaining cases are ordered according to their quality with the highest <a name="line.23"></a>
+<FONT color="green">024</FONT>     * quality case added to R. <a name="line.24"></a>
+<FONT color="green">025</FONT>     * &lt;br&gt;<a name="line.25"></a>
+<FONT color="green">026</FONT>     * The quality metric combines diversity and similarity. The quality of a case c <a name="line.26"></a>
+<FONT color="green">027</FONT>     * is proportional to the similarity between c and the query, and to the diversity<a name="line.27"></a>
+<FONT color="green">028</FONT>     * of c relative to those cases so far selected in R.<a name="line.28"></a>
+<FONT color="green">029</FONT>     * &lt;br&gt;<a name="line.29"></a>
+<FONT color="green">030</FONT>     * This algorithm is very expensive. It should be applied to small case bases. <a name="line.30"></a>
+<FONT color="green">031</FONT>     * &lt;p&gt;See:<a name="line.31"></a>
+<FONT color="green">032</FONT>     * &lt;p&gt;<a name="line.32"></a>
+<FONT color="green">033</FONT>     * B. Smyth and P. McClave. Similarity vs. diversity. In ICCBR '01: Proceedings <a name="line.33"></a>
+<FONT color="green">034</FONT>     * of the 4th International Conference on Case-Based Reasoning, pages 347-361, <a name="line.34"></a>
+<FONT color="green">035</FONT>     * London, UK, 2001. Springer-Verlag.<a name="line.35"></a>
+<FONT color="green">036</FONT>     * <a name="line.36"></a>
+<FONT color="green">037</FONT>     * <a name="line.37"></a>
+<FONT color="green">038</FONT>     * @author Juan A. Recio-Garcia<a name="line.38"></a>
+<FONT color="green">039</FONT>     * @author Developed at University College Cork (Ireland) in collaboration with Derek Bridge.<a name="line.39"></a>
+<FONT color="green">040</FONT>     * @version 1.0<a name="line.40"></a>
+<FONT color="green">041</FONT>     *<a name="line.41"></a>
+<FONT color="green">042</FONT>     */<a name="line.42"></a>
+<FONT color="green">043</FONT>    public class GreedySelection<a name="line.43"></a>
+<FONT color="green">044</FONT>    {<a name="line.44"></a>
+<FONT color="green">045</FONT>        /******************************************************************************/<a name="line.45"></a>
+<FONT color="green">046</FONT>        /**                           STATIC METHODS                                 **/<a name="line.46"></a>
+<FONT color="green">047</FONT>        /******************************************************************************/   <a name="line.47"></a>
+<FONT color="green">048</FONT>        <a name="line.48"></a>
+<FONT color="green">049</FONT>        <a name="line.49"></a>
+<FONT color="green">050</FONT>        /**<a name="line.50"></a>
+<FONT color="green">051</FONT>         * Executes the greedy selection algorithm<a name="line.51"></a>
+<FONT color="green">052</FONT>         * @param cases to select from<a name="line.52"></a>
+<FONT color="green">053</FONT>         * @param query to compare<a name="line.53"></a>
+<FONT color="green">054</FONT>         * @param simConfig is the knn similarity configuration. Its k determines the number of returned cases <a name="line.54"></a>
+<FONT color="green">055</FONT>         * @return k cases (k is defined in simConfig). <a name="line.55"></a>
+<FONT color="green">056</FONT>         */<a name="line.56"></a>
+<FONT color="green">057</FONT>        public static Collection&lt;CBRCase&gt; greedySelection(Collection&lt;RetrievalResult&gt; cases, CBRQuery query, NNConfig simConfig, int k)<a name="line.57"></a>
+<FONT color="green">058</FONT>        {<a name="line.58"></a>
+<FONT color="green">059</FONT>            Collection&lt;CBRCase&gt; C = SelectCases.selectAll(cases);<a name="line.59"></a>
+<FONT color="green">060</FONT>            Collection&lt;CBRCase&gt; R = new ArrayList&lt;CBRCase&gt;();<a name="line.60"></a>
+<FONT color="green">061</FONT>            for(int i=0; i&lt;k; i++)<a name="line.61"></a>
+<FONT color="green">062</FONT>            {<a name="line.62"></a>
+<FONT color="green">063</FONT>                CBRCase best = getMoreQuality(query, C, R, simConfig);<a name="line.63"></a>
+<FONT color="green">064</FONT>                R.add(best);<a name="line.64"></a>
+<FONT color="green">065</FONT>                C.remove(best);<a name="line.65"></a>
+<FONT color="green">066</FONT>            }<a name="line.66"></a>
+<FONT color="green">067</FONT>            return R;<a name="line.67"></a>
+<FONT color="green">068</FONT>        }<a name="line.68"></a>
+<FONT color="green">069</FONT>        <a name="line.69"></a>
+<FONT color="green">070</FONT>        /**<a name="line.70"></a>
+<FONT color="green">071</FONT>         * Returns the case with more quality.<a name="line.71"></a>
+<FONT color="green">072</FONT>         * @param query to compare<a name="line.72"></a>
+<FONT color="green">073</FONT>         * @param cases to compare<a name="line.73"></a>
+<FONT color="green">074</FONT>         * @param R is the set of previous selected cases<a name="line.74"></a>
+<FONT color="green">075</FONT>         * @param simConfig is the knn similarity config<a name="line.75"></a>
+<FONT color="green">076</FONT>         * @return the case with more quality<a name="line.76"></a>
+<FONT color="green">077</FONT>         */<a name="line.77"></a>
+<FONT color="green">078</FONT>        public static CBRCase getMoreQuality(CBRQuery query, Collection&lt;CBRCase&gt; cases, Collection&lt;CBRCase&gt; R, NNConfig simConfig)<a name="line.78"></a>
+<FONT color="green">079</FONT>        {<a name="line.79"></a>
+<FONT color="green">080</FONT>            <a name="line.80"></a>
+<FONT color="green">081</FONT>            Collection&lt;RetrievalResult&gt; nn = NNScoringMethod.evaluateSimilarity(cases, query, simConfig);<a name="line.81"></a>
+<FONT color="green">082</FONT>            <a name="line.82"></a>
+<FONT color="green">083</FONT>            CBRCase best = null;<a name="line.83"></a>
+<FONT color="green">084</FONT>            double maxQuality = -Double.MAX_VALUE;<a name="line.84"></a>
+<FONT color="green">085</FONT>            for(RetrievalResult rr: nn)<a name="line.85"></a>
+<FONT color="green">086</FONT>            {<a name="line.86"></a>
+<FONT color="green">087</FONT>                double quality = rr.getEval() * relDiversity(rr.get_case(), R, simConfig);<a name="line.87"></a>
+<FONT color="green">088</FONT>                if(quality &gt; maxQuality)<a name="line.88"></a>
+<FONT color="green">089</FONT>                {<a name="line.89"></a>
+<FONT color="green">090</FONT>                    maxQuality = quality;<a name="line.90"></a>
+<FONT color="green">091</FONT>                    best = rr.get_case();<a name="line.91"></a>
+<FONT color="green">092</FONT>                }<a name="line.92"></a>
+<FONT color="green">093</FONT>            }<a name="line.93"></a>
+<FONT color="green">094</FONT>            return best;<a name="line.94"></a>
+<FONT color="green">095</FONT>        }<a name="line.95"></a>
+<FONT color="green">096</FONT>        <a name="line.96"></a>
+<FONT color="green">097</FONT>        public static double relDiversity(CBRCase c, Collection&lt;CBRCase&gt; R, NNConfig simConfig)<a name="line.97"></a>
+<FONT color="green">098</FONT>        {<a name="line.98"></a>
+<FONT color="green">099</FONT>            if(R.isEmpty())<a name="line.99"></a>
+<FONT color="green">100</FONT>                return 1;<a name="line.100"></a>
+<FONT color="green">101</FONT>            double sum = 0;<a name="line.101"></a>
+<FONT color="green">102</FONT>            for(CBRCase _case : R)<a name="line.102"></a>
+<FONT color="green">103</FONT>            {<a name="line.103"></a>
+<FONT color="green">104</FONT>                Collection&lt;CBRCase&gt; aux = new ArrayList&lt;CBRCase&gt;();<a name="line.104"></a>
+<FONT color="green">105</FONT>                aux.add(_case);<a name="line.105"></a>
+<FONT color="green">106</FONT>                CBRQuery query = new CBRQuery();<a name="line.106"></a>
+<FONT color="green">107</FONT>                query.setDescription(c.getDescription());<a name="line.107"></a>
+<FONT color="green">108</FONT>                double sim = NNScoringMethod.evaluateSimilarity(aux, query, simConfig).iterator().next().getEval();<a name="line.108"></a>
+<FONT color="green">109</FONT>                sum += sim;<a name="line.109"></a>
+<FONT color="green">110</FONT>            }<a name="line.110"></a>
+<FONT color="green">111</FONT>            sum = sum/(double)R.size();<a name="line.111"></a>
+<FONT color="green">112</FONT>            <a name="line.112"></a>
+<FONT color="green">113</FONT>            return sum;<a name="line.113"></a>
+<FONT color="green">114</FONT>        }<a name="line.114"></a>
+<FONT color="green">115</FONT>    }<a name="line.115"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>
